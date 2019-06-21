@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'apple_id_request.dart';
+import 'authorization_scope.dart';
 
 class AppleIdProvider {
   static const MethodChannel _channel = const MethodChannel('dev.gilder.tom/sign_in_with_apple');
@@ -7,6 +8,14 @@ class AppleIdProvider {
   /// Creates a new Apple ID authorization request.
   static AppleIdRequest createRequest() {
     return AppleIdRequest();
+  }
+
+  static Future performRequests({List<Scope> scopes}) async {
+    final request = AppleIdRequest(requestedScopes: scopes);
+    final result = await _channel.invokeMethod("request",
+    {
+      "requestedScopes": scopes
+    });
   }
 
   /// Returns the credential state for the given user.

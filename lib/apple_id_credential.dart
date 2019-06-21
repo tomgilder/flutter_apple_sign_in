@@ -29,7 +29,7 @@ class AppleIdCredential {
   final String user;
 
   /// The contact information the user authorized your app to access.
-  final List<AuthorizationScope> authorizedScopes;
+  final List<Scope> authorizedScopes;
 
   /// The user’s name. Can be null.
   final PersonNameComponents fullName;
@@ -54,7 +54,7 @@ class AppleIdCredential {
 /// The separate parts of a person's name, allowing locale-aware formatting.
 @immutable
 class PersonNameComponents {
-  final List<AuthorizationScope> authorizedScopes;
+  final List<Scope> authorizedScopes;
 
   /// The user’s email address. Can be null.
   final String email;
