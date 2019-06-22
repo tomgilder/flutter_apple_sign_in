@@ -57,6 +57,26 @@ class _MyAppState extends State<MyApp> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+
+                          FutureBuilder(
+                            future: SignInWithApple.getCredentialState("userId"),
+                            builder: (context, AsyncSnapshot<CredentialState> snapshot) {
+                              switch (snapshot.data) {
+                                case CredentialState.authorized:
+                                  return Text("Authorized");
+
+                                case CredentialState.revoked:
+                                  return Text("Revoked");
+
+                                case CredentialState.notFound:
+                                  return Text("Not found");
+
+                                case CredentialState.error:
+                                  return Text("Error");
+                              }
+                            },
+                          ),
+
                           // SignInWithAppleButton(
                           //   style: ButtonStyle.black,
                           //   type: ButtonType.continueButton,

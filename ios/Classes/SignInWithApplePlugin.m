@@ -7,6 +7,8 @@
     NSMutableDictionary* controllersDict;
 }
 
+typedef void(^CredentialStateCompletionBlock)(ASAuthorizationAppleIDProviderCredentialState credentialState, NSError * _Nullable error);
+
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     
     AppleIDButtonFactory* appleIdButtonFactory = [[AppleIDButtonFactory alloc] initWithMessenger:registrar.messenger];
@@ -22,8 +24,10 @@
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-    if ([@"performRequests" isEqualToString:call.method]) {
+    if ([call.method isEqualToString:@"performRequests"]) {
         [self performRequests:call result:result];
+    } else if ([call.method isEqualToString:@"getCredentialState"]) {
+        [self getCredentialState:call result:result];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -60,5 +64,45 @@
     return request;
 }
 
+- (void)getCredentialState:(FlutterMethodCall*)call result:(FlutterResult)result {
+    CredentialStateCompletionBlock completion = ^(ASAuthorizationAppleIDProviderCredentialState credentialState, NSError * _Nullable error) {
+        if (error != nil) {
+            result(@{
+                     @"credentialState": @"error",
+                     @"error": [SignInWithApplePlugin dictionaryFromError:error]
+                     });
+        } else {
+            result(@{@"credentialState": [self stringForCredentialState:credentialState]});
+        }
+    };
+    
+    ASAuthorizationAppleIDProvider* provider = [[ASAuthorizationAppleIDProvider alloc] init];
+    [provider getCredentialStateForUserID:call.arguments[@"userId"]
+                               completion:completion];
+}
+
+- (NSString*)stringForCredentialState:(ASAuthorizationAppleIDProviderCredentialState)credentialState {
+    switch(credentialState) {
+        case ASAuthorizationAppleIDProviderCredentialAuthorized:
+            return @"authorized";
+            
+        case ASAuthorizationAppleIDProviderCredentialRevoked:
+            return @"revoked";
+            
+        default: // ASAuthorizationAppleIDProviderCredentialNotFound
+            return @"notFound";
+    }
+}
+
++ (NSDictionary *)dictionaryFromError:(NSError *)error {
+    return
+    @{
+      @"code": @(error.code),
+      @"domain": error.domain,
+      @"localizedDescription": error.localizedDescription,
+      @"localizedRecoverySuggestion": error.localizedRecoverySuggestion,
+      @"localizedFailureReason": error.localizedFailureReason
+      };
+}
 
 @end

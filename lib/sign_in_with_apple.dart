@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'apple_id_credential.dart';
+import 'apple_id_provider.dart';
 import 'apple_id_request.dart';
 
 class SignInWithApple {
@@ -21,8 +22,26 @@ class SignInWithApple {
         break;
     }
 
-    // TODO handle error
+    throw "Unknown status";
   }
+
+  static Future<CredentialState> getCredentialState(String userId) async {
+    final result = await _channel.invokeMethod("getCredentialState", { "userId" : userId });
+    
+    switch (result["credentialState"]) {
+      case "revoked":
+        return CredentialState.revoked;
+
+      case "authorized":
+        return CredentialState.authorized;
+
+      case "notFound":
+        return CredentialState.notFound;
+    }
+
+    return CredentialState.error;
+  }
+
 
   static AuthorizationResult _makeAuthorizationResult(Map<String, dynamic> params) {
     switch (params["credentialType"]) {

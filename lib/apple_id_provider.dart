@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:meta/meta.dart';
 import 'apple_id_request.dart';
 import 'authorization_scope.dart';
 
@@ -22,23 +23,33 @@ class AppleIdProvider {
   static Future<CredentialState> getCredentialState(String userId) async {
     final result = await _channel.invokeMethod("getCredentialState", { "userId": userId });
     
-    switch (result) {
+    switch (result["credentialState"]) {
+      case "error":
+        return CredentialState(status: CredentialStatus.error);
+
       case "revoked":
-        return CredentialState.revoked;
+        return CredentialState(status: CredentialStatus.revoked);
       
       case "authorized":
-        return CredentialState.authorized;
+        return CredentialState(status: CredentialStatus.authorized);
 
       case "notFound":
-        return CredentialState.notFound;
+        return CredentialState(status: CredentialStatus.notFound);
     }
 
-    throw "Unknown Sign In with Apple user state: '$result'";
+    throw "Unknown credentialState";
   }
 }
 
+@immutable
+class CredentialState {
+  final CredentialStatus status;
+
+  const CredentialState({@required this.status});
+}
+
 // Possible values for the credential state of a user.
-enum CredentialState {
+enum CredentialStatus {
   // Authorization for the given user has been revoked.
   revoked,
 
@@ -46,5 +57,7 @@ enum CredentialState {
   authorized,
 
   /// The user can’t be found.
-  notFound
+  notFound,
+
+  error
  }
