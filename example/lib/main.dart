@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:sign_in_with_apple/apple_id_button.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:sign_in_with_apple/apple_id_provider.dart';
 import 'package:sign_in_with_apple/authorization_scope.dart';
 import 'package:sign_in_with_apple/apple_id_request.dart';
 
@@ -61,17 +60,21 @@ class _MyAppState extends State<MyApp> {
                           FutureBuilder(
                             future: SignInWithApple.getCredentialState("userId"),
                             builder: (context, AsyncSnapshot<CredentialState> snapshot) {
-                              switch (snapshot.data) {
-                                case CredentialState.authorized:
+                              if (!snapshot.hasData) {
+                                return Text("Loading...");
+                              }
+
+                              switch (snapshot.data.status) {
+                                case CredentialStatus.authorized:
                                   return Text("Authorized");
 
-                                case CredentialState.revoked:
+                                case CredentialStatus.revoked:
                                   return Text("Revoked");
 
-                                case CredentialState.notFound:
+                                case CredentialStatus.notFound:
                                   return Text("Not found");
 
-                                case CredentialState.error:
+                                case CredentialStatus.error:
                                   return Text("Error");
                               }
                             },
@@ -83,7 +86,7 @@ class _MyAppState extends State<MyApp> {
                           //   onPressed: () => print("tapped 1"),
                           // ),
                           // SizedBox(
-                          //   height: 10,
+                          //   height: 10, 
                           // ),
                           // SignInWithAppleButton(
                           //   style: ButtonStyle.white,
@@ -118,15 +121,4 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-
-  // void _getSignInState() async {
-  //   final state = await AppleIdProvider.getCredentialState("userId");
-  // }
-
-  // void _signInWithAppleButtonPress() {
-  //   final request = await AppleIdProvider.request(
-  //     scopes: [Scope.email, Scope.fullName]
-  //   );
-  //   // request.
-  // }
 }

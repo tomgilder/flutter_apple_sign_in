@@ -17,7 +17,7 @@ typedef void(^CredentialStateCompletionBlock)(ASAuthorizationAppleIDProviderCred
                             withId:@"dev.gilder.tom/apple_id_button"];
     
     FlutterMethodChannel* channel = [FlutterMethodChannel
-                                     methodChannelWithName:@"sign_in_with_apple"
+                                     methodChannelWithName:@"dev.gilder.tom/sign_in_with_apple"
                                      binaryMessenger:[registrar messenger]];
     SignInWithApplePlugin* instance = [[SignInWithApplePlugin alloc] init];
     [registrar addMethodCallDelegate:instance channel:channel];

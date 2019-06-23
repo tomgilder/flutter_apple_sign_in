@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
+import 'package:meta/meta.dart';
 import 'apple_id_credential.dart';
-import 'apple_id_provider.dart';
 import 'apple_id_request.dart';
 
 class SignInWithApple {
-  static const MethodChannel _channel = const MethodChannel('sign_in_with_apple');
+  static const MethodChannel _channel = const MethodChannel('dev.gilder.tom/sign_in_with_apple');
 
   static Future<AuthorizationResult> performRequests(List<AuthorizationRequest> requests) async {
     final result = await _channel.invokeMethod("performRequests", {
@@ -25,21 +25,25 @@ class SignInWithApple {
     throw "Unknown status";
   }
 
+  /// Returns the credential state for the given user.
   static Future<CredentialState> getCredentialState(String userId) async {
-    final result = await _channel.invokeMethod("getCredentialState", { "userId" : userId });
+    final result = await _channel.invokeMethod("getCredentialState", { "userId": userId });
     
     switch (result["credentialState"]) {
-      case "revoked":
-        return CredentialState.revoked;
+      case "error":
+        return CredentialState(status: CredentialStatus.error, error: CredentialError());
 
+      case "revoked":
+        return CredentialState(status: CredentialStatus.revoked);
+      
       case "authorized":
-        return CredentialState.authorized;
+        return CredentialState(status: CredentialStatus.authorized);
 
       case "notFound":
-        return CredentialState.notFound;
+        return CredentialState(status: CredentialStatus.notFound);
     }
 
-    return CredentialState.error;
+    throw "Unknown credentialState";
   }
 
 
@@ -62,8 +66,36 @@ class SignInWithApple {
         throw "Unknown credentials type";
     }
   }
+
 }
 
+@immutable
+class CredentialState {
+  final CredentialStatus status;
+
+  final CredentialError error;
+
+  const CredentialState({@required this.status, this.error});
+}
+
+class CredentialError {
+
+}
+
+// Possible values for the credential state of a user.
+enum CredentialStatus {
+  // Authorization for the given user has been revoked.
+  revoked,
+
+  /// The user is authorized.
+  authorized,
+
+  /// The user can’t be found.
+  notFound,
+
+  error
+ }
+ 
 class AuthorizationResult {
   
   final AuthorizationStatus status;
