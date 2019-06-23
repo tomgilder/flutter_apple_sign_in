@@ -2,18 +2,6 @@ import 'package:meta/meta.dart';
 import 'dart:typed_data';
 import 'authorization_scope.dart';
 
-/// Possible values for the real user indicator.
-enum UserDetectionStatus {
-  /// The user appears to be a real person.
-  likelyReal,
-
-  /// The system hasn’t determined whether the user might be a real person.
-  unknown,
-
-  /// The system can’t determine this user’s status as a real person.
-  unsupported
-}
-
 @immutable
 class AppleIdCredential {
   /// A JSON Web Token (JWT) that securely communicates information about the user to your app. Can be null.
@@ -51,13 +39,38 @@ class AppleIdCredential {
       this.realUserStatus});
 }
 
+/// Possible values for the real user indicator.
+enum UserDetectionStatus {
+  /// The user appears to be a real person.
+  likelyReal,
+
+  /// The system hasn’t determined whether the user might be a real person.
+  unknown,
+
+  /// The system can’t determine this user’s status as a real person.
+  unsupported
+}
+
 /// The separate parts of a person's name, allowing locale-aware formatting.
 @immutable
 class PersonNameComponents {
-  final List<Scope> authorizedScopes;
+  /// Pre-nominal letters denoting title, salutation, or honorific, e.g. Dr., Mr. Can be null.
+  final String namePrefix;
 
-  /// The user’s email address. Can be null.
-  final String email;
+  /// Name bestowed upon an individual by one's parents, e.g. Johnathan. Can be null.
+  final String givenName;
 
-  PersonNameComponents({this.authorizedScopes, this.email});
+  /// Secondary given name chosen to differentiate those with the same first name, e.g. Maple. Can be null.
+  final String middleName;
+
+  /// Name passed from one generation to another to indicate lineage, e.g. Appleseed. Can be null.
+  final String familyName;
+
+  /// Post-nominal letters denoting degree, accreditation, or other honor, e.g. Esq., Jr., Ph.D. Can be null.
+  final String nameSuffix;
+
+  /// Name substituted for the purposes of familiarity, e.g. "Johnny". Can be null.
+  final String nickname;
+
+  PersonNameComponents({this.namePrefix, this.givenName, this.middleName, this.familyName, this.nameSuffix, this.nickname});
 }

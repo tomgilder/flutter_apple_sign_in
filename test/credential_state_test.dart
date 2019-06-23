@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sign_in_with_apple/apple_id_provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 void main() {
@@ -27,17 +26,17 @@ void main() {
   });
 
   test('getCredentialState returns revoked', () async {
-    final result = await AppleIdProvider.getCredentialState("revokedUserId");
-    expect(result, CredentialState.revoked);
+    final result = await SignInWithApple.getCredentialState("revokedUserId");
+    expect(result.status, CredentialStatus.revoked);
   });
 
   test('getCredentialState returns authorized', () async {
-    final result = await AppleIdProvider.getCredentialState("authorizedUserId");
-    expect(result, CredentialState.authorized);
+    final result = await SignInWithApple.getCredentialState("authorizedUserId");
+    expect(result.status, CredentialStatus.authorized);
   });
 
   test('getCredentialState returns notFound', () async {
-    final result = await AppleIdProvider.getCredentialState("notFoundUserId");
-    expect(result, CredentialState.notFound);
+    final result = await SignInWithApple.getCredentialState("notFoundUserId");
+    expect(result.status, CredentialStatus.notFound);
   });
 }

@@ -2,6 +2,8 @@
 #import "SignInWithApplePlugin.h"
 #import "AppleIDButtonFactory.h"
 #import "AuthorizationControllerDelegate.h"
+#import "Converters/NSErrorConverter.h"
+#import "Converters/CredentialConverter.h"
 
 @implementation SignInWithApplePlugin {
     NSMutableDictionary* controllersDict;
@@ -16,9 +18,8 @@ typedef void(^CredentialStateCompletionBlock)(ASAuthorizationAppleIDProviderCred
     [registrar registerViewFactory:appleIdButtonFactory
                             withId:@"dev.gilder.tom/apple_id_button"];
     
-    FlutterMethodChannel* channel = [FlutterMethodChannel
-                                     methodChannelWithName:@"dev.gilder.tom/sign_in_with_apple"
-                                     binaryMessenger:[registrar messenger]];
+    FlutterMethodChannel* channel = [FlutterMethodChannel methodChannelWithName:@"dev.gilder.tom/sign_in_with_apple"
+                                                                binaryMessenger:[registrar messenger]];
     SignInWithApplePlugin* instance = [[SignInWithApplePlugin alloc] init];
     [registrar addMethodCallDelegate:instance channel:channel];
 }
@@ -69,40 +70,16 @@ typedef void(^CredentialStateCompletionBlock)(ASAuthorizationAppleIDProviderCred
         if (error != nil) {
             result(@{
                      @"credentialState": @"error",
-                     @"error": [SignInWithApplePlugin dictionaryFromError:error]
+                     @"error": [NSErrorConverter dictionaryFromError:error]
                      });
         } else {
-            result(@{@"credentialState": [self stringForCredentialState:credentialState]});
+            result(@{@"credentialState": [CredentialConverter stringForCredentialState:credentialState]});
         }
     };
     
     ASAuthorizationAppleIDProvider* provider = [[ASAuthorizationAppleIDProvider alloc] init];
     [provider getCredentialStateForUserID:call.arguments[@"userId"]
                                completion:completion];
-}
-
-- (NSString*)stringForCredentialState:(ASAuthorizationAppleIDProviderCredentialState)credentialState {
-    switch(credentialState) {
-        case ASAuthorizationAppleIDProviderCredentialAuthorized:
-            return @"authorized";
-            
-        case ASAuthorizationAppleIDProviderCredentialRevoked:
-            return @"revoked";
-            
-        default: // ASAuthorizationAppleIDProviderCredentialNotFound
-            return @"notFound";
-    }
-}
-
-+ (NSDictionary *)dictionaryFromError:(NSError *)error {
-    return
-    @{
-      @"code": @(error.code),
-      @"domain": error.domain,
-      @"localizedDescription": error.localizedDescription,
-      @"localizedRecoverySuggestion": error.localizedRecoverySuggestion,
-      @"localizedFailureReason": error.localizedFailureReason
-      };
 }
 
 @end
