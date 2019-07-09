@@ -4,6 +4,9 @@ import 'package:meta/meta.dart';
 import 'apple_id_credential.dart';
 import 'apple_id_request.dart';
 
+export 'authorization_scope.dart';
+export 'apple_id_request.dart';
+
 class SignInWithApple {
   static const MethodChannel _channel = const MethodChannel('dev.gilder.tom/sign_in_with_apple');
 
@@ -27,6 +30,8 @@ class SignInWithApple {
 
   /// Returns the credential state for the given user.
   static Future<CredentialState> getCredentialState(String userId) async {
+    assert(userId != null, "Must provide userId");
+
     final result = await _channel.invokeMethod("getCredentialState", { "userId": userId });
     
     switch (result["credentialState"]) {
@@ -47,10 +52,11 @@ class SignInWithApple {
   }
 
 
-  static AuthorizationResult _makeAuthorizationResult(Map<String, dynamic> params) {
+  static AuthorizationResult _makeAuthorizationResult(Map params) {
     switch (params["credentialType"]) {
       case "ASAuthorizationAppleIDCredential":
-        final Map<String, dynamic> credential = params["credential"];
+        final Map credential = params["credential"];
+        assert(credential != null);
 
         return AuthorizationResult(
           status: AuthorizationStatus.authorized,
@@ -97,7 +103,6 @@ enum CredentialStatus {
  }
  
 class AuthorizationResult {
-  
   final AuthorizationStatus status;
 
   final AppleIdCredential credential;

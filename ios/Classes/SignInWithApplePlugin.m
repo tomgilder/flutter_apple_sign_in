@@ -5,9 +5,7 @@
 #import "Converters/NSErrorConverter.h"
 #import "Converters/CredentialConverter.h"
 
-@implementation SignInWithApplePlugin {
-    NSMutableDictionary* controllersDict;
-}
+@implementation SignInWithApplePlugin
 
 typedef void(^CredentialStateCompletionBlock)(ASAuthorizationAppleIDProviderCredentialState credentialState, NSError * _Nullable error);
 
@@ -53,9 +51,6 @@ typedef void(^CredentialStateCompletionBlock)(ASAuthorizationAppleIDProviderCred
     ASAuthorizationController *controller = [[ASAuthorizationController alloc] initWithAuthorizationRequests:requests];
     controller.delegate = delegate;
     [controller performRequests];
-    
-    [controllersDict setObject:result
-                        forKey:controller];
 }
 
 - (ASAuthorizationAppleIDRequest*)createAppleIDRequest:(NSDictionary*)args {
