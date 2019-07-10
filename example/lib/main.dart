@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:flutter/services.dart';
 import 'package:sign_in_with_apple/apple_id_button.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:sign_in_with_apple/authorization_scope.dart';
@@ -55,8 +53,10 @@ class _MyAppState extends State<MyApp> {
                                   return Text("Not found");
 
                                 case CredentialStatus.error:
-                                  return Text("Error");
+                                  return Text("Error: ${snapshot.data.error}");
                               }
+
+                              return Text("Unknown state");
                             },
                           ),
 

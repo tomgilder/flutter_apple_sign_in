@@ -11,9 +11,8 @@ class SignInWithApple {
   static const MethodChannel _channel = const MethodChannel('dev.gilder.tom/sign_in_with_apple');
 
   static Future<AuthorizationResult> performRequests(List<AuthorizationRequest> requests) async {
-    final result = await _channel.invokeMethod("performRequests", {
-      "requests": requests.map((request) => request.toMap()).toList()
-    });
+    final result = await _channel
+        .invokeMethod("performRequests", {"requests": requests.map((request) => request.toMap()).toList()});
 
     switch (result["status"]) {
       case "authorized":
@@ -32,15 +31,16 @@ class SignInWithApple {
   static Future<CredentialState> getCredentialState(String userId) async {
     assert(userId != null, "Must provide userId");
 
-    final result = await _channel.invokeMethod("getCredentialState", { "userId": userId });
+    final result = await _channel.invokeMethod("getCredentialState", {"userId": userId});
+    final credentialState = result["credentialState"];
     
-    switch (result["credentialState"]) {
+    switch (credentialState) {
       case "error":
-        return CredentialState(status: CredentialStatus.error, error: CredentialError());
+        return CredentialState(status: CredentialStatus.error, error: NsError.fromMap(result["error"]));
 
       case "revoked":
         return CredentialState(status: CredentialStatus.revoked);
-      
+
       case "authorized":
         return CredentialState(status: CredentialStatus.authorized);
 
@@ -48,9 +48,8 @@ class SignInWithApple {
         return CredentialState(status: CredentialStatus.notFound);
     }
 
-    throw "Unknown credentialState";
+    throw "Unknown credentialState: '$credentialState'";
   }
-
 
   static AuthorizationResult _makeAuthorizationResult(Map params) {
     switch (params["credentialType"]) {
@@ -59,33 +58,51 @@ class SignInWithApple {
         assert(credential != null);
 
         return AuthorizationResult(
-          status: AuthorizationStatus.authorized,
-          credential: AppleIdCredential(
-            email: credential["email"]
-          )
-        );
+            status: AuthorizationStatus.authorized, credential: AppleIdCredential(email: credential["email"]));
 
         break;
 
       default:
-
         throw "Unknown credentials type";
     }
   }
-
 }
 
 @immutable
 class CredentialState {
   final CredentialStatus status;
 
-  final CredentialError error;
+  final NsError error;
 
   const CredentialState({@required this.status, this.error});
 }
 
-class CredentialError {
+@immutable
+class NsError {
+  final int code;
 
+  final String domain;
+
+  final String localizedDescription;
+
+  final String localizedRecoverySuggestion;
+
+  final String localizedFailureReason;
+
+  @override
+  String toString() => localizedDescription;
+
+  const NsError({this.code, this.domain, this.localizedDescription, this.localizedRecoverySuggestion, this.localizedFailureReason});
+
+  factory NsError.fromMap(Map map) {
+    return NsError(
+      code: map["code"],
+      domain: map["domain"],
+      localizedDescription: map["localizedDescription"],
+      localizedRecoverySuggestion: map["localizedRecoverySuggestion"],
+      localizedFailureReason: map["localizedFailureReason"],
+    );
+  }
 }
 
 // Possible values for the credential state of a user.
@@ -100,8 +117,8 @@ enum CredentialStatus {
   notFound,
 
   error
- }
- 
+}
+
 class AuthorizationResult {
   final AuthorizationStatus status;
 
@@ -110,7 +127,4 @@ class AuthorizationResult {
   AuthorizationResult({this.status, this.credential});
 }
 
-enum AuthorizationStatus {
-  authorized,
-  error
-}
+enum AuthorizationStatus { authorized, error }
