@@ -40,8 +40,6 @@ class SignInWithAppleButton extends StatelessWidget {
     this.cornerRadius = 4
   });
 
-  MethodChannel _channel;
-
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
@@ -64,7 +62,7 @@ class SignInWithAppleButton extends StatelessWidget {
   }
 
   void _createMethodChannel(int nativeViewId) {
-    _channel = MethodChannel("dev.gilder.tom/sign_in_with_apple_button_$nativeViewId")
+    MethodChannel("dev.gilder.tom/sign_in_with_apple_button_$nativeViewId")
       ..setMethodCallHandler(_onMethodCall);
   }
 

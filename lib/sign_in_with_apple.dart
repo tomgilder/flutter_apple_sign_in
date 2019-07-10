@@ -13,8 +13,9 @@ class SignInWithApple {
   static Future<AuthorizationResult> performRequests(List<AuthorizationRequest> requests) async {
     final result = await _channel
         .invokeMethod("performRequests", {"requests": requests.map((request) => request.toMap()).toList()});
+    final status = result["status"];
 
-    switch (result["status"]) {
+    switch (status) {
       case "authorized":
         return _makeAuthorizationResult(result);
         break;
@@ -24,7 +25,7 @@ class SignInWithApple {
         break;
     }
 
-    throw "Unknown status";
+    throw "performRequests: Unknown status returned: '$status'";
   }
 
   /// Returns the credential state for the given user.

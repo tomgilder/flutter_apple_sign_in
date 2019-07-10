@@ -30,7 +30,7 @@ void main() {
       return completer.future;
     }
     
-    test('performRequests sends default request to channel', () async {
+    test('performRequests sends getCredentialState request to channel', () async {
       final methodCall = _getPerformRequestsMethodCall();
       await SignInWithApple.performRequests([
         AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
