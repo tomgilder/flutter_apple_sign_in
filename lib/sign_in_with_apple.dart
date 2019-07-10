@@ -21,7 +21,10 @@ class SignInWithApple {
         break;
 
       case "error":
-        return AuthorizationResult(status: AuthorizationStatus.error);
+        return AuthorizationResult(
+          status: AuthorizationStatus.error,
+          error: NsError.fromMap(result["error"])
+        );
         break;
     }
 
@@ -120,12 +123,15 @@ enum CredentialStatus {
   error
 }
 
+@immutable
 class AuthorizationResult {
   final AuthorizationStatus status;
 
   final AppleIdCredential credential;
 
-  AuthorizationResult({this.status, this.credential});
+  final NsError error;
+
+  const AuthorizationResult({@required this.status, this.credential, this.error});
 }
 
 enum AuthorizationStatus { authorized, error }

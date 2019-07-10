@@ -17,8 +17,13 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
+
+    final userId = "userId";
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -36,7 +41,7 @@ class _MyAppState extends State<MyApp> {
 
                           // Current sign in status
                           FutureBuilder(
-                            future: SignInWithApple.getCredentialState("userId"),
+                            future: SignInWithApple.getCredentialState(userId),
                             builder: (context, AsyncSnapshot<CredentialState> snapshot) {
                               if (!snapshot.hasData) {
                                 return Text("Loading...");
@@ -44,16 +49,16 @@ class _MyAppState extends State<MyApp> {
 
                               switch (snapshot.data.status) {
                                 case CredentialStatus.authorized:
-                                  return Text("Authorized");
+                                  return Text("getCredentialState returned authorized for '$userId'");
 
                                 case CredentialStatus.revoked:
-                                  return Text("Revoked");
+                                  return Text("getCredentialState returned revoked for '$userId'");
 
                                 case CredentialStatus.notFound:
-                                  return Text("Not found");
+                                  return Text("getCredentialState returned not found for '$userId'");
 
                                 case CredentialStatus.error:
-                                  return Text("Error: ${snapshot.data.error}");
+                                  return Text("getCredentialState returned error for '$userId': ${snapshot.data.error}");
                               }
 
                               return Text("Unknown state");
@@ -72,11 +77,21 @@ class _MyAppState extends State<MyApp> {
                                 AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
                               ]);
 
+                              switch (result.status) {
+                                case AuthorizationStatus.authorized:
+                                  print("performRequests returned authorized: ");
+                                  break;
+
+                                case AuthorizationStatus.error:
+                                  print("performRequests returned error: ${result.error.localizedDescription}");
+                                  break;
+                              }
+
                               if (result.status == AuthorizationStatus.authorized) {
                                 print(result.credential.email);
                               }
                             },
-                          ),
+                          )
                         ])))),
       ),
     );

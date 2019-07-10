@@ -7,7 +7,7 @@
 + (NSDictionary*)dictionaryFromAppleIDCredential:(ASAuthorizationAppleIDCredential*)credential {
     return
     @{
-      @"result": @"authorized",
+      @"status": @"authorized",
       @"credentialType": @"ASAuthorizationAppleIDCredential",
       @"credential": @{
               @"user": [Utils valueOrNSNull:credential.user],

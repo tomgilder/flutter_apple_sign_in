@@ -19,15 +19,16 @@
    didCompleteWithAuthorization:(ASAuthorization *)authorization {
     if ([authorization.credential isKindOfClass:[ASAuthorizationAppleIDCredential class]]) {
         _completion([CredentialConverter dictionaryFromAppleIDCredential:authorization.credential]);
+        return;
     }
     
-    _completion(@{@"result": @"error"});
+    _completion(@{@"status": @"error"});
 }
 
 - (void)authorizationController:(ASAuthorizationController *)controller
            didCompleteWithError:(NSError *)error {
     _completion(@
-                {@"result": @"error",
+                {@"status": @"error",
                     @"error": [NSErrorConverter dictionaryFromError:error]
                 }
                 );
