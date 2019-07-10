@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> {
 
                               switch (result.status) {
                                 case AuthorizationStatus.authorized:
-                                  print("performRequests returned authorized: ");
+                                  print("performRequests returned authorized: '${result.credential.user}'");
                                   break;
 
                                 case AuthorizationStatus.error:
