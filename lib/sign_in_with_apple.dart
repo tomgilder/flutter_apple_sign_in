@@ -62,7 +62,9 @@ class SignInWithApple {
         assert(credential != null);
 
         return AuthorizationResult(
-            status: AuthorizationStatus.authorized, credential: AppleIdCredential(email: credential["email"]));
+          status: AuthorizationStatus.authorized,
+          credential: AppleIdCredential.fromMap(credential)
+        );
 
         break;
 

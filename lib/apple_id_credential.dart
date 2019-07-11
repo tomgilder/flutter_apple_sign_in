@@ -37,18 +37,39 @@ class AppleIdCredential {
       this.fullName,
       this.email,
       this.realUserStatus});
+
+  factory AppleIdCredential.fromMap(Map map) {
+    return AppleIdCredential(
+      identityToken: map["identityToken"],
+      authorizationCode: map["authorizationCode"],
+      state: map["state"],
+      user: map["user"],
+      authorizedScopes: _scopesFromList(map["authorizedScopes"]),
+      email: map["email"],
+      realUserStatus: UserDetectionStatus.values[map["realUserStatus"]],
+      fullName: PersonNameComponents.fromMap(map["fullName"])
+    );
+  }
+
+  static List<Scope> _scopesFromList(List list) {
+    if (list == null) {
+      return List();
+    }
+
+    return list.map((scope) => Scope.rawValue(scope)).toList();
+  }
 }
 
 /// Possible values for the real user indicator.
 enum UserDetectionStatus {
-  /// The user appears to be a real person.
-  likelyReal,
+  /// The system can’t determine this user’s status as a real person.
+  unsupported,
 
   /// The system hasn’t determined whether the user might be a real person.
   unknown,
 
-  /// The system can’t determine this user’s status as a real person.
-  unsupported
+  /// The user appears to be a real person.
+  likelyReal
 }
 
 /// The separate parts of a person's name, allowing locale-aware formatting.
@@ -73,4 +94,19 @@ class PersonNameComponents {
   final String nickname;
 
   PersonNameComponents({this.namePrefix, this.givenName, this.middleName, this.familyName, this.nameSuffix, this.nickname});
+
+  factory PersonNameComponents.fromMap(Map map) {
+    if (map == null) {
+      return PersonNameComponents();
+    }
+
+    return PersonNameComponents(
+      namePrefix: map["namePrefix"],
+      givenName: map["givenName"],
+      middleName: map["middleName"],
+      familyName: map["familyName"],
+      nameSuffix: map["nameSuffix"],
+      nickname: map["nickname"]
+    );
+  }
 }

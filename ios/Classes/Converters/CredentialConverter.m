@@ -5,8 +5,7 @@
 @implementation CredentialConverter
 
 + (NSDictionary*)dictionaryFromAppleIDCredential:(ASAuthorizationAppleIDCredential*)credential {
-    return
-    @{
+    NSDictionary *dict = @{
       @"status": @"authorized",
       @"credentialType": @"ASAuthorizationAppleIDCredential",
       @"credential": @{
@@ -17,8 +16,11 @@
               @"identityToken": credential.identityToken ? [FlutterStandardTypedData typedDataWithBytes:credential.identityToken] : [NSNull null],
               @"email": [Utils valueOrNSNull:credential.email],
               @"fullName": [CredentialConverter dictionaryFromPersonNameComponents:credential.fullName],
-              //@"realUserStatus": credential.realUserStatus // TODO: ASUserDetectionStatus (int)
+              @"realUserStatus": @(credential.realUserStatus)
               }};
+    
+    NSLog(@"%@", dict); // TODO: Remove debug logging
+    return dict;
 }
 
 + (NSObject*)dictionaryFromPersonNameComponents:(NSPersonNameComponents*)components {
@@ -29,8 +31,8 @@
     return
     @{
       @"namePrefix": [Utils valueOrNSNull:components.namePrefix],
-      @"namePrefix": [Utils valueOrNSNull:components.givenName],
-      @"namePrefix": [Utils valueOrNSNull:components.middleName],
+      @"givenName": [Utils valueOrNSNull:components.givenName],
+      @"middleName": [Utils valueOrNSNull:components.middleName],
       @"familyName": [Utils valueOrNSNull:components.familyName],
       @"nameSuffix": [Utils valueOrNSNull:components.nameSuffix],
       @"nickname": [Utils valueOrNSNull:components.nickname],

@@ -17,7 +17,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
-
+  AuthorizationResult authorizationResult;
 
   @override
   Widget build(BuildContext context) {
@@ -40,34 +40,36 @@ class _MyAppState extends State<MyApp> {
                         children: [
 
                           // Current sign in status
-                          FutureBuilder(
-                            future: SignInWithApple.getCredentialState(userId),
-                            builder: (context, AsyncSnapshot<CredentialState> snapshot) {
-                              if (!snapshot.hasData) {
-                                return Text("Loading...");
-                              }
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FutureBuilder(
+                              future: SignInWithApple.getCredentialState(userId),
+                              builder: (context, AsyncSnapshot<CredentialState> snapshot) {
+                                if (!snapshot.hasData) {
+                                  return Text("Loading...");
+                                }
 
-                              switch (snapshot.data.status) {
-                                case CredentialStatus.authorized:
-                                  return Text("getCredentialState returned authorized for '$userId'");
+                                switch (snapshot.data.status) {
+                                  case CredentialStatus.authorized:
+                                    return Text("getCredentialState returned authorized for '$userId'");
 
-                                case CredentialStatus.revoked:
-                                  return Text("getCredentialState returned revoked for '$userId'");
+                                  case CredentialStatus.revoked:
+                                    return Text("getCredentialState returned revoked for '$userId'");
 
-                                case CredentialStatus.notFound:
-                                  return Text("getCredentialState returned not found for '$userId'");
+                                  case CredentialStatus.notFound:
+                                    return Text("getCredentialState returned not found for '$userId'");
 
-                                case CredentialStatus.error:
-                                  return Text("getCredentialState returned error for '$userId': ${snapshot.data.error}");
-                              }
+                                  case CredentialStatus.error:
+                                    return Text("getCredentialState returned error for '$userId': ${snapshot.data.error}");
+                                }
 
-                              return Text("Unknown state");
-                            },
+                                return Text("Unknown state");
+                              },
+                            ),
                           ),
 
-                          SizedBox(height: 50,),
+                          SizedBox(height:40),
 
-                          // Sign in button
                           SignInWithAppleButton(
                             style: ButtonStyle.whiteOutline,
                             type: ButtonType.signUp,
@@ -77,21 +79,18 @@ class _MyAppState extends State<MyApp> {
                                 AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
                               ]);
 
-                              switch (result.status) {
-                                case AuthorizationStatus.authorized:
-                                  print("performRequests returned authorized: '${result.credential.user}'");
-                                  break;
-
-                                case AuthorizationStatus.error:
-                                  print("performRequests returned error: ${result.error.localizedDescription}");
-                                  break;
-                              }
-
-                              if (result.status == AuthorizationStatus.authorized) {
-                                print(result.credential.email);
-                              }
+                              setState(() => authorizationResult = result);
                             },
-                          )
+                          ),
+
+                          SizedBox(height:40),
+
+                          if (authorizationResult?.status == AuthorizationStatus.authorized)
+                            Text("performRequests returned authorized:\nemail: ${authorizationResult?.credential?.email}\ngivenName:${authorizationResult?.credential?.fullName?.givenName}\nuser: ${authorizationResult?.credential?.user}"),
+
+                          if (authorizationResult?.status == AuthorizationStatus.error)
+                            Text("performRequests returned error: ${authorizationResult?.error?.localizedDescription}"),
+                          
                         ])))),
       ),
     );
