@@ -1,20 +1,26 @@
 PODS:
   - Flutter (1.0.0)
+  - flutter_secure_storage (3.2.0):
+    - Flutter
   - sign_in_with_apple (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios`)
+  - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - sign_in_with_apple (from `.symlinks/plugins/sign_in_with_apple/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: ".symlinks/flutter/ios"
+  flutter_secure_storage:
+    :path: ".symlinks/plugins/flutter_secure_storage/ios"
   sign_in_with_apple:
     :path: ".symlinks/plugins/sign_in_with_apple/ios"
 
 SPEC CHECKSUMS:
   Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  flutter_secure_storage: 0c5779648ff644110e507909b77a57e620cbbf8b
   sign_in_with_apple: 8c2d9c984a30e45286a78d308a27e46f50cae9da
 
 PODFILE CHECKSUM: aff02bfeed411c636180d6812254b2daeea14d09
