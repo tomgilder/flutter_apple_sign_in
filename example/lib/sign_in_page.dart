@@ -32,7 +32,7 @@ class _SignInPageState extends State<SignInPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SignInWithAppleButton(
+                        AppleSignInButton(
                           style: ButtonStyle.whiteOutline,
                           type: ButtonType.signUp,
                           cornerRadius: 10,
@@ -44,7 +44,7 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   void logIn() async {
-    final AuthorizationResult result = await SignInWithApple.performRequests([
+    final AuthorizationResult result = await AppleSignIn.performRequests([
       AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
     ]);
 
@@ -74,7 +74,7 @@ class _SignInPageState extends State<SignInPage> {
       return;
     }
 
-    final credentialState = await SignInWithApple.getCredentialState(userId);
+    final credentialState = await AppleSignIn.getCredentialState(userId);
     switch (credentialState.status) {
       case CredentialStatus.authorized:
         print("getCredentialState returned authorized");

@@ -18,7 +18,7 @@ enum ButtonStyle {
 }
 
 /// A control you add to your interface that enables users to initiate the Sign In with Apple flow.
-class SignInWithAppleButton extends StatelessWidget {
+class AppleSignInButton extends StatelessWidget {
   /// The callback that is called when the button is tapped or otherwise activated.
   ///
   /// If this is set to null, the button will be disabled.
@@ -33,7 +33,7 @@ class SignInWithAppleButton extends StatelessWidget {
   /// A custom corner radius to be used by this button.
   final double cornerRadius;
 
-  SignInWithAppleButton({
+  AppleSignInButton({
     this.onPressed,
     this.type = ButtonType.defaultButton,
     this.style = ButtonStyle.white,
@@ -73,7 +73,7 @@ class SignInWithAppleButton extends StatelessWidget {
         return null;
     }
 
-    throw MissingPluginException("SignInWithAppleButton._onMethodCall: no handler for ${call.method}");
+    throw MissingPluginException("AppleSignInButton._onMethodCall: no handler for ${call.method}");
   }
 
   void _onTapped() {

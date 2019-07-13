@@ -10,7 +10,7 @@ export 'apple_id_button.dart';
 export 'apple_id_credential.dart';
 export 'open_id_operation.dart';
 
-class SignInWithApple {
+class AppleSignIn {
   static const MethodChannel _channel = const MethodChannel('dev.gilder.tom/sign_in_with_apple');
 
   static Future<AuthorizationResult> performRequests(List<AuthorizationRequest> requests) async {
