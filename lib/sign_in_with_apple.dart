@@ -104,6 +104,8 @@ class NsError {
   const NsError({this.code, this.domain, this.localizedDescription, this.localizedRecoverySuggestion, this.localizedFailureReason});
 
   factory NsError.fromMap(Map map) {
+    assert(map != null);
+
     return NsError(
       code: map["code"],
       domain: map["domain"],

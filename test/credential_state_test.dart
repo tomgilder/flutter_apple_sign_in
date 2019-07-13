@@ -33,9 +33,23 @@ void main() {
     });
 
     test('getCredentialState returns error', () async {
-      _setUpReturn({ "credentialState": "error" } );
+      _setUpReturn({
+        "credentialState": "error",
+        "error": {
+          "code": 42,
+          "domain": "domain",
+          "localizedDescription": "localizedDescription",
+          "localizedRecoverySuggestion": "localizedRecoverySuggestion",
+          "localizedFailureReason": "localizedFailureReason"
+        }
+      });
+      
       final result = await AppleSignIn.getCredentialState(USER_ID);
       expect(result.status, CredentialStatus.error);
+      expect(result.error.code, 42);
+      expect(result.error.localizedDescription, "localizedDescription");
+      expect(result.error.localizedRecoverySuggestion, "localizedRecoverySuggestion");
+      expect(result.error.localizedFailureReason, "localizedFailureReason");
     });
 
     test('getCredentialState returns authorized', () async {

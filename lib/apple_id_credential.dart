@@ -46,7 +46,9 @@ class AppleIdCredential {
       user: map["user"],
       authorizedScopes: _scopesFromList(map["authorizedScopes"]),
       email: map["email"],
-      realUserStatus: UserDetectionStatus.values[map["realUserStatus"]],
+      realUserStatus: map.containsKey("realUserStatus")
+        ? UserDetectionStatus.values[map["realUserStatus"]]
+        : UserDetectionStatus.unsupported,
       fullName: PersonNameComponents.fromMap(map["fullName"])
     );
   }
