@@ -32,7 +32,7 @@ void main() {
     
     test('performRequests sends getCredentialState request to channel', () async {
       final methodCall = _getPerformRequestsMethodCall();
-      await SignInWithApple.performRequests([
+      await AppleSignIn.performRequests([
         AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
       ]);
 
@@ -47,7 +47,7 @@ void main() {
     test('AppleIdRequest maps operations', () async {
       Future expectOperation(OpenIdOperation operation, String expected) async {
         final methodCall = _getPerformRequestsMethodCall();
-        await SignInWithApple.performRequests([AppleIdRequest(requestedOperation: operation)]);
+        await AppleSignIn.performRequests([AppleIdRequest(requestedOperation: operation)]);
         expect((await methodCall).arguments["requests"][0]["requestedOperation"], expected);
       }
 

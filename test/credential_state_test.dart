@@ -28,31 +28,31 @@ void main() {
         throw "Unexpected method: ${mc.method}";
       });
       
-      await SignInWithApple.getCredentialState(USER_ID);
+      await AppleSignIn.getCredentialState(USER_ID);
       expect(methodCall.arguments["userId"], USER_ID);
     });
 
     test('getCredentialState returns error', () async {
       _setUpReturn({ "credentialState": "error" } );
-      final result = await SignInWithApple.getCredentialState(USER_ID);
+      final result = await AppleSignIn.getCredentialState(USER_ID);
       expect(result.status, CredentialStatus.error);
     });
 
     test('getCredentialState returns authorized', () async {
       _setUpReturn({ "credentialState": "authorized" } );
-      final result = await SignInWithApple.getCredentialState(USER_ID);
+      final result = await AppleSignIn.getCredentialState(USER_ID);
       expect(result.status, CredentialStatus.authorized);
     });
 
     test('getCredentialState returns revoked', () async {
       _setUpReturn({ "credentialState": "revoked" } );
-      final result = await SignInWithApple.getCredentialState(USER_ID);
+      final result = await AppleSignIn.getCredentialState(USER_ID);
       expect(result.status, CredentialStatus.revoked);
     });
 
     test('getCredentialState returns authorized', () async {
       _setUpReturn({ "credentialState": "notFound" } );
-      final result = await SignInWithApple.getCredentialState(USER_ID);
+      final result = await AppleSignIn.getCredentialState(USER_ID);
       expect(result.status, CredentialStatus.notFound);
     });
   });
