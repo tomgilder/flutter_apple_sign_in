@@ -1,5 +1,5 @@
-name: sign_in_with_apple_example
-description: Demonstrates how to use the sign_in_with_apple plugin.
+name: apple_sign_in_example
+description: Demonstrates how to use the apple_sign_in plugin.
 publish_to: 'none'
 
 environment:
@@ -18,7 +18,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  sign_in_with_apple:
+  apple_sign_in:
     path: ../
 
 # For information on the generic Dart part of this file, see the

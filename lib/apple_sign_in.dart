@@ -11,7 +11,7 @@ export 'apple_id_credential.dart';
 export 'open_id_operation.dart';
 
 class AppleSignIn {
-  static const MethodChannel _channel = const MethodChannel('dev.gilder.tom/sign_in_with_apple');
+  static const MethodChannel _channel = const MethodChannel('dev.gilder.tom/apple_sign_in');
 
   static Future<AuthorizationResult> performRequests(List<AuthorizationRequest> requests) async {
     final result = await _channel

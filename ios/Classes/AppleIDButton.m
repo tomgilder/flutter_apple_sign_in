@@ -1,6 +1,6 @@
 //
 //  AppleIdButton.m
-//  sign_in_with_apple
+//  apple_sign_in
 //
 //  Created by Tom on 21/06/2019.
 //
@@ -20,7 +20,7 @@
               binaryMessenger:(NSObject<FlutterBinaryMessenger>*)messenger {
     
     if ([super init]) {
-        NSString* channelName = [NSString stringWithFormat:@"dev.gilder.tom/sign_in_with_apple_button_%lld", viewId];
+        NSString* channelName = [NSString stringWithFormat:@"dev.gilder.tom/apple_sign_in_button_%lld", viewId];
         _channel = [FlutterMethodChannel methodChannelWithName:channelName binaryMessenger:messenger];
         
         _viewId = viewId;

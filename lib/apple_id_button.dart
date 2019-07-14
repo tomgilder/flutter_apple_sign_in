@@ -62,7 +62,7 @@ class AppleSignInButton extends StatelessWidget {
   }
 
   void _createMethodChannel(int nativeViewId) {
-    MethodChannel("dev.gilder.tom/sign_in_with_apple_button_$nativeViewId")
+    MethodChannel("dev.gilder.tom/apple_sign_in_button_$nativeViewId")
       ..setMethodCallHandler(_onMethodCall);
   }
 

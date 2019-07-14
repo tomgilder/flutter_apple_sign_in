@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:sign_in_with_apple_example/sign_in_page.dart';
+import 'package:apple_sign_in/apple_sign_in.dart';
+import 'package:apple_sign_in_example/sign_in_page.dart';
 
 class SecretMembersOnlyPage extends StatelessWidget {
   final AppleIdCredential credential;

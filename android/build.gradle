@@ -1,4 +1,4 @@
-group 'dev.gilder.tom.sign_in_with_apple'
+group 'dev.gilder.tom.apple_sign_in'
 version '1.0-SNAPSHOT'
 
 buildscript {

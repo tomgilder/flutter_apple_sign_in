@@ -1,10 +1,10 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:apple_sign_in/apple_sign_in.dart';
 
 void main() {
   group("getCredentialState", () {
-    const MethodChannel channel = MethodChannel("dev.gilder.tom/sign_in_with_apple");
+    const MethodChannel channel = MethodChannel("dev.gilder.tom/apple_sign_in");
     const String USER_ID = "USER_ID";
 
     void _setUpReturn(Map map) {

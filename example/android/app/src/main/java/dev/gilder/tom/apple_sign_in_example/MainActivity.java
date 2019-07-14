@@ -1,4 +1,4 @@
-package dev.gilder.tom.sign_in_with_apple_example;
+package dev.gilder.tom.apple_sign_in_example;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

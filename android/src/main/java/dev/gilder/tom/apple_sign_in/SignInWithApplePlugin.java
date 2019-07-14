@@ -1,4 +1,4 @@
-package dev.gilder.tom.sign_in_with_apple;
+package dev.gilder.tom.apple_sign_in;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -6,12 +6,12 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
-/** SignInWithApplePlugin */
-public class SignInWithApplePlugin implements MethodCallHandler {
+/** AppleSignInPlugin */
+public class AppleSignInPlugin implements MethodCallHandler {
   /** Plugin registration. */
   public static void registerWith(Registrar registrar) {
-    final MethodChannel channel = new MethodChannel(registrar.messenger(), "sign_in_with_apple");
-    channel.setMethodCallHandler(new SignInWithApplePlugin());
+    final MethodChannel channel = new MethodChannel(registrar.messenger(), "apple_sign_in");
+    channel.setMethodCallHandler(new AppleSignInPlugin());
   }
 
   @Override

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="dev.gilder.tom.sign_in_with_apple_example">
+    package="dev.gilder.tom.apple_sign_in_example">
 
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
@@ -8,7 +8,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="sign_in_with_apple_example"
+        android:label="apple_sign_in_example"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

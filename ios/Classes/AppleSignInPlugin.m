@@ -1,11 +1,11 @@
 #import <AuthenticationServices/AuthenticationServices.h>
-#import "SignInWithApplePlugin.h"
+#import "AppleSignInPlugin.h"
 #import "AppleIDButtonFactory.h"
 #import "AuthorizationControllerDelegate.h"
 #import "Converters/NSErrorConverter.h"
 #import "Converters/CredentialConverter.h"
 
-@implementation SignInWithApplePlugin
+@implementation AppleSignInPlugin
 
 typedef void(^CredentialStateCompletionBlock)(ASAuthorizationAppleIDProviderCredentialState credentialState, NSError * _Nullable error);
 
@@ -16,9 +16,9 @@ typedef void(^CredentialStateCompletionBlock)(ASAuthorizationAppleIDProviderCred
     [registrar registerViewFactory:appleIdButtonFactory
                             withId:@"dev.gilder.tom/apple_id_button"];
     
-    FlutterMethodChannel* channel = [FlutterMethodChannel methodChannelWithName:@"dev.gilder.tom/sign_in_with_apple"
+    FlutterMethodChannel* channel = [FlutterMethodChannel methodChannelWithName:@"dev.gilder.tom/apple_sign_in"
                                                                 binaryMessenger:[registrar messenger]];
-    SignInWithApplePlugin* instance = [[SignInWithApplePlugin alloc] init];
+    AppleSignInPlugin* instance = [[AppleSignInPlugin alloc] init];
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 

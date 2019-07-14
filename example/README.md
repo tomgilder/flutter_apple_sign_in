@@ -1,6 +1,6 @@
-# sign_in_with_apple_example
+# apple_sign_in_example
 
-Demonstrates how to use the sign_in_with_apple plugin.
+Demonstrates how to use the apple_sign_in plugin.
 
 ## Getting Started
 

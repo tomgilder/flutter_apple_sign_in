@@ -1,9 +1,7 @@
 import 'dart:typed_data';
-
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sign_in_with_apple/apple_id_credential.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:apple_sign_in/apple_id_credential.dart';
+import 'package:apple_sign_in/apple_sign_in.dart';
 
 void main() {
   group("AppleIdCredential", () {

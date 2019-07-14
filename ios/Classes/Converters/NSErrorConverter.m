@@ -1,6 +1,6 @@
 //
 //  NSErrorConverter.m
-//  sign_in_with_apple
+//  apple_sign_in
 //
 //  Created by Tom on 23/06/2019.
 //
