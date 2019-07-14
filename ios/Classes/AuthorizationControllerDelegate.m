@@ -16,7 +16,7 @@
 }
 
 - (void)authorizationController:(ASAuthorizationController *)controller
-   didCompleteWithAuthorization:(ASAuthorization *)authorization {
+   didCompleteWithAuthorization:(ASAuthorization *)authorization API_AVAILABLE(ios(13.0)) {
     if ([authorization.credential isKindOfClass:[ASAuthorizationAppleIDCredential class]]) {
         _completion([CredentialConverter dictionaryFromAppleIDCredential:authorization.credential]);
         return;
@@ -26,7 +26,7 @@
 }
 
 - (void)authorizationController:(ASAuthorizationController *)controller
-           didCompleteWithError:(NSError *)error {
+           didCompleteWithError:(NSError *)error API_AVAILABLE(ios(13.0)) {
     _completion(@
                 {@"status": @"error",
                     @"error": [NSErrorConverter dictionaryFromError:error]

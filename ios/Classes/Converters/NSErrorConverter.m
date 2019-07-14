@@ -9,10 +9,6 @@
 
 @implementation NSErrorConverter
 
-static id valueOrNSNull(id value) {
-    return value ? value : [NSNull null];
-}
-
 + (NSDictionary *)dictionaryFromError:(NSError *)error {
     return
     @{

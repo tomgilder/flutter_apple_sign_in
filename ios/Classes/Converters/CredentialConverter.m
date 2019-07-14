@@ -4,7 +4,7 @@
 
 @implementation CredentialConverter
 
-+ (NSDictionary*)dictionaryFromAppleIDCredential:(ASAuthorizationAppleIDCredential*)credential {
++ (NSDictionary*)dictionaryFromAppleIDCredential:(ASAuthorizationAppleIDCredential*)credential API_AVAILABLE(ios(13.0)) {
     NSDictionary *dict = @{
       @"status": @"authorized",
       @"credentialType": @"ASAuthorizationAppleIDCredential",
@@ -23,7 +23,7 @@
     return dict;
 }
 
-+ (NSObject*)dictionaryFromPersonNameComponents:(NSPersonNameComponents*)components {
++ (NSObject*)dictionaryFromPersonNameComponents:(NSPersonNameComponents*)components API_AVAILABLE(ios(9.0)) {
     if (!components) {
         return [NSNull null];
     }
@@ -39,7 +39,7 @@
       };
 }
 
-+ (NSString*)stringForCredentialState:(ASAuthorizationAppleIDProviderCredentialState)credentialState {
++ (NSString*)stringForCredentialState:(ASAuthorizationAppleIDProviderCredentialState)credentialState API_AVAILABLE(ios(13.0)) {
     switch(credentialState) {
         case ASAuthorizationAppleIDProviderCredentialAuthorized:
             return @"authorized";

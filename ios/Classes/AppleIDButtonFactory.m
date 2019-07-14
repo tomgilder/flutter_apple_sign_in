@@ -19,10 +19,14 @@
 - (NSObject<FlutterPlatformView>*)createWithFrame:(CGRect)frame
                                    viewIdentifier:(int64_t)viewId
                                         arguments:(id _Nullable)args {
-    return [[AppleIDButton alloc] initWithFrame:frame
-                                 viewIdentifier:viewId
-                                      arguments:args
-                                binaryMessenger:_messenger];
+    if (@available(iOS 13.0, *)) {
+        return [[AppleIDButton alloc] initWithFrame:frame
+                                     viewIdentifier:viewId
+                                          arguments:args
+                                    binaryMessenger:_messenger];
+    }
+    
+    return nil;
 }
 
 @end
