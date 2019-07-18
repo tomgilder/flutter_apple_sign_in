@@ -34,7 +34,7 @@ class _SignInPageState extends State<SignInPage> {
                       children: [
                         AppleSignInButton(
                           style: ButtonStyle.whiteOutline,
-                          type: ButtonType.signUp,
+                          type: ButtonType.signIn,
                           cornerRadius: 10,
                           onPressed: logIn,
                         ),

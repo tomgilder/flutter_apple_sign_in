@@ -54,8 +54,8 @@
         return ASAuthorizationAppleIDButtonTypeContinue;
     }
     
-    if ([buttonType isEqualToString:@"ButtonType.signUp"]) {
-        return ASAuthorizationAppleIDButtonTypeSignUp;
+    if ([buttonType isEqualToString:@"ButtonType.signIn"]) {
+        return ASAuthorizationAppleIDButtonTypeSignIn;
     }
     
     // "ButtonType.defaultType"

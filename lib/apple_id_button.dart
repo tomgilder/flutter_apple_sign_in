@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 enum ButtonType {
   defaultButton,
   continueButton,
-  signUp
+  signIn
 }
 
 /// A style for the authorization button.
