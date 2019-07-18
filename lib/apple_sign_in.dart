@@ -11,10 +11,20 @@ export 'apple_id_credential.dart';
 export 'open_id_operation.dart';
 
 class AppleSignIn {
-  static const MethodChannel _channel = const MethodChannel('dev.gilder.tom/apple_sign_in');
+  static const MethodChannel _methodChannel = const MethodChannel('dev.gilder.tom/apple_sign_in');
+  static const EventChannel _eventChannel = const EventChannel('dev.gilder.tom/apple_sign_in_events');
+
+  static Stream<void> _onCredentialsRevoked;
+  static Stream<void> get onCredentialRevoked {
+    if (_onCredentialsRevoked == null) {
+      _onCredentialsRevoked = _eventChannel.receiveBroadcastStream(); 
+    }
+
+    return _onCredentialsRevoked;
+  }
 
   static Future<AuthorizationResult> performRequests(List<AuthorizationRequest> requests) async {
-    final result = await _channel
+    final result = await _methodChannel
         .invokeMethod("performRequests", {"requests": requests.map((request) => request.toMap()).toList()});
     final status = result["status"];
 
@@ -38,7 +48,7 @@ class AppleSignIn {
   static Future<CredentialState> getCredentialState(String userId) async {
     assert(userId != null, "Must provide userId");
 
-    final result = await _channel.invokeMethod("getCredentialState", {"userId": userId});
+    final result = await _methodChannel.invokeMethod("getCredentialState", {"userId": userId});
     final credentialState = result["credentialState"];
     
     switch (credentialState) {

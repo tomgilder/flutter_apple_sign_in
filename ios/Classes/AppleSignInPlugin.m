@@ -6,20 +6,28 @@
 #import "Converters/CredentialConverter.h"
 
 @implementation AppleSignInPlugin
+{
+    FlutterEventSink _eventSink;
+}
 
 typedef void(^CredentialStateCompletionBlock)(ASAuthorizationAppleIDProviderCredentialState credentialState, NSError * _Nullable error) API_AVAILABLE(ios(13.0));
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-    
     AppleIDButtonFactory* appleIdButtonFactory = [[AppleIDButtonFactory alloc] initWithMessenger:registrar.messenger];
-    
     [registrar registerViewFactory:appleIdButtonFactory
                             withId:@"dev.gilder.tom/apple_id_button"];
     
-    FlutterMethodChannel* channel = [FlutterMethodChannel methodChannelWithName:@"dev.gilder.tom/apple_sign_in"
-                                                                binaryMessenger:[registrar messenger]];
-    AppleSignInPlugin* instance = [[AppleSignInPlugin alloc] init];
-    [registrar addMethodCallDelegate:instance channel:channel];
+    if (@available(iOS 13.0, *)) {
+        FlutterMethodChannel* methodChannel = [FlutterMethodChannel methodChannelWithName:@"dev.gilder.tom/apple_sign_in"
+                                                                          binaryMessenger:[registrar messenger]];
+        
+        FlutterEventChannel* eventChannel = [FlutterEventChannel eventChannelWithName:@"dev.gilder.tom/apple_sign_in_events"
+                                                                      binaryMessenger:[registrar messenger]];
+        
+        AppleSignInPlugin* plugin = [[AppleSignInPlugin alloc] init];
+        [registrar addMethodCallDelegate:plugin channel:methodChannel];
+        [eventChannel setStreamHandler:plugin];
+    }
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
@@ -78,6 +86,31 @@ typedef void(^CredentialStateCompletionBlock)(ASAuthorizationAppleIDProviderCred
     ASAuthorizationAppleIDProvider* provider = [[ASAuthorizationAppleIDProvider alloc] init];
     [provider getCredentialStateForUserID:call.arguments[@"userId"]
                                completion:completion];
+}
+
+
+#pragma mark Credentials revoked FlutterStreamHandler
+
+- (FlutterError*)onListenWithArguments:(id)arguments
+                             eventSink:(FlutterEventSink)eventSink API_AVAILABLE(ios(13.0)) {
+    _eventSink = eventSink;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onCredentialRevokedNotification:)
+                                                 name:ASAuthorizationAppleIDProviderCredentialRevokedNotification
+                                               object:nil];
+    return nil;
+}
+
+- (FlutterError*)onCancelWithArguments:(id)arguments {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    _eventSink = nil;
+    return nil;
+}
+
+- (void)onCredentialRevokedNotification:(NSNotification *)notification API_AVAILABLE(ios(13.0)) {
+    if (_eventSink != nil) {
+        _eventSink(ASAuthorizationAppleIDProviderCredentialRevokedNotification);
+    }
 }
 
 @end

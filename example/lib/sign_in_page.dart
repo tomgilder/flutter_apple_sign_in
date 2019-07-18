@@ -15,6 +15,10 @@ class _SignInPageState extends State<SignInPage> {
   void initState() {
     super.initState();
     checkLoggedInState();
+
+    AppleSignIn.onCredentialRevoked.listen((_) {
+      print("Credentials revoked");
+    });
   }
 
   @override

@@ -11,7 +11,6 @@ This plugin currently only supports iOS. There's a [JavaScript framework](https:
 ## To Do
 
 * Documentation
-* Support for [revocation notifications](https://developer.apple.com/documentation/foundation/nsnotification/name/3175424-credentialrevokednotification)
 * Support for iOS 12 and below, including an `isAvailable()` method to check if sign in is available
 * Flutter widget version of the "Sign in With Apple" button, to avoid the cost of creating a UIKit view
 
