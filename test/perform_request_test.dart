@@ -18,9 +18,7 @@ void main() {
           return {
             "status": "authorized",
             "credentialType": "ASAuthorizationAppleIDCredential",
-            "credential": {
-              "email": "email@email.com"
-            }
+            "credential": {"email": "email@email.com"}
           };
         }
 
@@ -29,26 +27,32 @@ void main() {
 
       return completer.future;
     }
-    
-    test('performRequests sends getCredentialState request to channel', () async {
+
+    test('performRequests sends getCredentialState request to channel',
+        () async {
       final methodCall = _getPerformRequestsMethodCall();
       await AppleSignIn.performRequests([
         AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
       ]);
 
-      expect((await methodCall).arguments["requests"], [{
-        "requestType": "AppleIdRequest",
-        "user": null,
-        "requestedOperation": "login",
-        "requestedScopes": ["email", "full_name"]
-      }]);
+      expect((await methodCall).arguments["requests"], [
+        {
+          "requestType": "AppleIdRequest",
+          "user": null,
+          "requestedOperation": "login",
+          "requestedScopes": ["email", "full_name"]
+        }
+      ]);
     });
 
     test('AppleIdRequest maps operations', () async {
       Future expectOperation(OpenIdOperation operation, String expected) async {
         final methodCall = _getPerformRequestsMethodCall();
-        await AppleSignIn.performRequests([AppleIdRequest(requestedOperation: operation)]);
-        expect((await methodCall).arguments["requests"][0]["requestedOperation"], expected);
+        await AppleSignIn.performRequests(
+            [AppleIdRequest(requestedOperation: operation)]);
+        expect(
+            (await methodCall).arguments["requests"][0]["requestedOperation"],
+            expected);
       }
 
       await expectOperation(OpenIdOperation.operationImplicit, "implicit");

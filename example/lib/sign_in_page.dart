@@ -1,3 +1,5 @@
+import 'package:apple_sign_in_example/button_test/button_test_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:apple_sign_in/apple_sign_in.dart';
@@ -9,6 +11,8 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  final Future<bool> _isAvailableFuture = AppleSignIn.isAvailable();
+
   String errorMessage;
 
   @override
@@ -32,18 +36,37 @@ class _SignInPageState extends State<SignInPage> {
           child: Center(
               child: SizedBox(
                   width: 280,
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        AppleSignInButton(
-                          style: ButtonStyle.whiteOutline,
-                          type: ButtonType.signIn,
-                          cornerRadius: 10,
-                          onPressed: logIn,
-                        ),
-                        if (errorMessage != null) Text(errorMessage)
-                      ])))),
+                  child: FutureBuilder<bool>(
+                    future: _isAvailableFuture,
+                    builder: (context, isAvailableSnapshot) {
+                      if (!isAvailableSnapshot.hasData) {
+                        return Container(child: Text('Loading...'));
+                      }
+
+                      return isAvailableSnapshot.data
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  AppleSignInButton(),
+                                  if (errorMessage != null)
+                                    Text(errorMessage),
+                                  SizedBox(
+                                    height: 500,
+                                  ),
+                                  RaisedButton(
+                                    child: Text("Button Test Page"),
+                                    onPressed: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (_) => ButtonTestPage()));
+                                    },
+                                  )
+                                ])
+                          : Text('Sign in With Apple not available. Must be run on iOS 13+');
+                    },
+                  )))),
     );
   }
 
@@ -55,11 +78,13 @@ class _SignInPageState extends State<SignInPage> {
     switch (result.status) {
       case AuthorizationStatus.authorized:
         // Store user ID
-        await FlutterSecureStorage().write(key: "userId", value: result.credential.user);
+        await FlutterSecureStorage()
+            .write(key: "userId", value: result.credential.user);
 
         // Navigate to secret page (shhh!)
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (_) => SecretMembersOnlyPage(credential: result.credential)));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (_) =>
+                SecretMembersOnlyPage(credential: result.credential)));
         break;
 
       case AuthorizationStatus.error:
@@ -85,7 +110,8 @@ class _SignInPageState extends State<SignInPage> {
         break;
 
       case CredentialStatus.error:
-        print("getCredentialState returned an error: ${credentialState.error.localizedDescription}");
+        print(
+            "getCredentialState returned an error: ${credentialState.error.localizedDescription}");
         break;
 
       case CredentialStatus.revoked:

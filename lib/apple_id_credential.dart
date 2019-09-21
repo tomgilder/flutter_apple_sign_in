@@ -40,17 +40,16 @@ class AppleIdCredential {
 
   factory AppleIdCredential.fromMap(Map map) {
     return AppleIdCredential(
-      identityToken: map["identityToken"],
-      authorizationCode: map["authorizationCode"],
-      state: map["state"],
-      user: map["user"],
-      authorizedScopes: _scopesFromList(map["authorizedScopes"]),
-      email: map["email"],
-      realUserStatus: map.containsKey("realUserStatus")
-        ? UserDetectionStatus.values[map["realUserStatus"]]
-        : UserDetectionStatus.unsupported,
-      fullName: PersonNameComponents.fromMap(map["fullName"])
-    );
+        identityToken: map["identityToken"],
+        authorizationCode: map["authorizationCode"],
+        state: map["state"],
+        user: map["user"],
+        authorizedScopes: _scopesFromList(map["authorizedScopes"]),
+        email: map["email"],
+        realUserStatus: map.containsKey("realUserStatus")
+            ? UserDetectionStatus.values[map["realUserStatus"]]
+            : UserDetectionStatus.unsupported,
+        fullName: PersonNameComponents.fromMap(map["fullName"]));
   }
 
   static List<Scope> _scopesFromList(List list) {
@@ -95,7 +94,13 @@ class PersonNameComponents {
   /// Name substituted for the purposes of familiarity, e.g. "Johnny". Can be null.
   final String nickname;
 
-  PersonNameComponents({this.namePrefix, this.givenName, this.middleName, this.familyName, this.nameSuffix, this.nickname});
+  PersonNameComponents(
+      {this.namePrefix,
+      this.givenName,
+      this.middleName,
+      this.familyName,
+      this.nameSuffix,
+      this.nickname});
 
   factory PersonNameComponents.fromMap(Map map) {
     if (map == null) {
@@ -103,12 +108,11 @@ class PersonNameComponents {
     }
 
     return PersonNameComponents(
-      namePrefix: map["namePrefix"],
-      givenName: map["givenName"],
-      middleName: map["middleName"],
-      familyName: map["familyName"],
-      nameSuffix: map["nameSuffix"],
-      nickname: map["nickname"]
-    );
+        namePrefix: map["namePrefix"],
+        givenName: map["givenName"],
+        middleName: map["middleName"],
+        familyName: map["familyName"],
+        nameSuffix: map["nameSuffix"],
+        nickname: map["nickname"]);
   }
 }

@@ -5,13 +5,12 @@ import 'package:apple_sign_in/apple_sign_in.dart';
 
 void main() {
   group("AppleIdCredential", () {
-
     test("Creates from map", () async {
       final map = {
         "identityToken": Uint8List.fromList([4, 8, 15, 16, 23, 42]),
         "authorizationCode": Uint8List.fromList([1, 2, 3]),
         "state": "state",
-        "authorizedScopes": [ "email", "full_name" ],
+        "authorizedScopes": ["email", "full_name"],
         "user": "user",
         "email": "email",
         "realUserStatus": 2,
@@ -24,7 +23,7 @@ void main() {
           "nickname": "nick"
         }
       };
-      
+
       final result = AppleIdCredential.fromMap(map);
 
       expect(result.identityToken.toList(), [4, 8, 15, 16, 23, 42]);

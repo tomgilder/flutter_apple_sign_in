@@ -35,7 +35,8 @@ class SecretMembersOnlyPage extends StatelessWidget {
                     child: Text("Log out"),
                     onPressed: () async {
                       await FlutterSecureStorage().deleteAll();
-                      Navigator.of(context).push(MaterialPageRoute(builder: (_) => SignInPage()));
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => SignInPage()));
                     })
               ]),
         )));

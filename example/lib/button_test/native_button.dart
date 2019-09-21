@@ -2,43 +2,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-
-/// A type for the authorization button.
-enum ButtonType {
-  defaultButton,
-  continueButton,
-  signIn
-}
-
-/// A style for the authorization button.
-enum ButtonStyle {
-  black,
-  whiteOutline,
-  white
-}
+import 'package:apple_sign_in/apple_sign_in.dart';
 
 /// A control you add to your interface that enables users to initiate the Sign In with Apple flow.
-class AppleSignInButton extends StatelessWidget {
+class NativeAppleSignInButton extends StatelessWidget {
   /// The callback that is called when the button is tapped or otherwise activated.
   ///
   /// If this is set to null, the button will be disabled.
   final VoidCallback onPressed;
-  
-    /// A type for the authorization button.
+
+  /// A type for the authorization button.
   final ButtonType type;
 
   /// A style for the authorization button.
-  final ButtonStyle style;  
+  final ButtonStyle style;
 
   /// A custom corner radius to be used by this button.
   final double cornerRadius;
 
-  AppleSignInButton({
-    this.onPressed,
-    this.type = ButtonType.defaultButton,
-    this.style = ButtonStyle.white,
-    this.cornerRadius = 4
-  });
+  const NativeAppleSignInButton(
+      {this.onPressed,
+      this.type = ButtonType.defaultButton,
+      this.style = ButtonStyle.white,
+      this.cornerRadius = 4});
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +59,8 @@ class AppleSignInButton extends StatelessWidget {
         return null;
     }
 
-    throw MissingPluginException("AppleSignInButton._onMethodCall: no handler for ${call.method}");
+    throw MissingPluginException(
+        "AppleSignInButton._onMethodCall: no handler for ${call.method}");
   }
 
   void _onTapped() {

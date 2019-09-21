@@ -1,4 +1,3 @@
-
 import 'package:meta/meta.dart';
 
 /// The kinds of contact information that can be requested from the user.

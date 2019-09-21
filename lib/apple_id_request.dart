@@ -23,15 +23,21 @@ class AppleIdRequest extends AuthorizationRequest {
   final String user;
 
   // TODO should default OpenIdOperation be login?
-  const AppleIdRequest({this.user, OpenIdOperation requestedOperation = OpenIdOperation.operationLogin, List<Scope> requestedScopes})
-      : super(requestedOperation: requestedOperation, requestedScopes: requestedScopes);
+  const AppleIdRequest(
+      {this.user,
+      OpenIdOperation requestedOperation = OpenIdOperation.operationLogin,
+      List<Scope> requestedScopes})
+      : super(
+            requestedOperation: requestedOperation,
+            requestedScopes: requestedScopes);
 
   Map<String, dynamic> toMap() {
     return {
       "requestType": "AppleIdRequest",
       "user": user,
       "requestedOperation": requestedOperation.value,
-      "requestedScopes": requestedScopes?.map((scope) => scope.value)?.toList() ?? []
+      "requestedScopes":
+          requestedScopes?.map((scope) => scope.value)?.toList() ?? []
     };
   }
 }

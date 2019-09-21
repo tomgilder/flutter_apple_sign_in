@@ -17,17 +17,15 @@ typedef void(^CredentialStateCompletionBlock)(ASAuthorizationAppleIDProviderCred
     [registrar registerViewFactory:appleIdButtonFactory
                             withId:@"dev.gilder.tom/apple_id_button"];
     
-    if (@available(iOS 13.0, *)) {
-        FlutterMethodChannel* methodChannel = [FlutterMethodChannel methodChannelWithName:@"dev.gilder.tom/apple_sign_in"
-                                                                          binaryMessenger:[registrar messenger]];
-        
-        FlutterEventChannel* eventChannel = [FlutterEventChannel eventChannelWithName:@"dev.gilder.tom/apple_sign_in_events"
+    FlutterMethodChannel* methodChannel = [FlutterMethodChannel methodChannelWithName:@"dev.gilder.tom/apple_sign_in"
                                                                       binaryMessenger:[registrar messenger]];
-        
-        AppleSignInPlugin* plugin = [[AppleSignInPlugin alloc] init];
-        [registrar addMethodCallDelegate:plugin channel:methodChannel];
-        [eventChannel setStreamHandler:plugin];
-    }
+    
+    FlutterEventChannel* eventChannel = [FlutterEventChannel eventChannelWithName:@"dev.gilder.tom/apple_sign_in_events"
+                                                                  binaryMessenger:[registrar messenger]];
+    
+    AppleSignInPlugin* plugin = [[AppleSignInPlugin alloc] init];
+    [registrar addMethodCallDelegate:plugin channel:methodChannel];
+    [eventChannel setStreamHandler:plugin];
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
@@ -101,12 +99,15 @@ typedef void(^CredentialStateCompletionBlock)(ASAuthorizationAppleIDProviderCred
 #pragma mark Credentials revoked FlutterStreamHandler
 
 - (FlutterError*)onListenWithArguments:(id)arguments
-                             eventSink:(FlutterEventSink)eventSink API_AVAILABLE(ios(13.0)) {
-    _eventSink = eventSink;
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(onCredentialRevokedNotification:)
-                                                 name:ASAuthorizationAppleIDProviderCredentialRevokedNotification
-                                               object:nil];
+                             eventSink:(FlutterEventSink)eventSink {
+    if (@available(iOS 13.0, *)) {
+        _eventSink = eventSink;
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(onCredentialRevokedNotification:)
+                                                     name:ASAuthorizationAppleIDProviderCredentialRevokedNotification
+                                                   object:nil];
+    }
+    
     return nil;
 }
 

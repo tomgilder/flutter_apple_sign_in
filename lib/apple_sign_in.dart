@@ -3,29 +3,33 @@ import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 import 'apple_id_credential.dart';
 import 'apple_id_request.dart';
-
 export 'authorization_scope.dart';
 export 'apple_id_request.dart';
-export 'apple_id_button.dart';
 export 'apple_id_credential.dart';
 export 'open_id_operation.dart';
+export 'apple_sign_in_button.dart';
 
 class AppleSignIn {
-  static const MethodChannel _methodChannel = const MethodChannel('dev.gilder.tom/apple_sign_in');
-  static const EventChannel _eventChannel = const EventChannel('dev.gilder.tom/apple_sign_in_events');
+  static const MethodChannel _methodChannel =
+      const MethodChannel('dev.gilder.tom/apple_sign_in');
+  static const EventChannel _eventChannel =
+      const EventChannel('dev.gilder.tom/apple_sign_in_events');
 
   static Stream<void> _onCredentialsRevoked;
   static Stream<void> get onCredentialRevoked {
     if (_onCredentialsRevoked == null) {
-      _onCredentialsRevoked = _eventChannel.receiveBroadcastStream(); 
+      _onCredentialsRevoked = _eventChannel.receiveBroadcastStream();
     }
 
     return _onCredentialsRevoked;
   }
 
-  static Future<AuthorizationResult> performRequests(List<AuthorizationRequest> requests) async {
-    final result = await _methodChannel
-        .invokeMethod("performRequests", {"requests": requests.map((request) => request.toMap()).toList()});
+  static Future<AuthorizationResult> performRequests(
+      List<AuthorizationRequest> requests) async {
+    final result = await _methodChannel.invokeMethod(
+      "performRequests",
+      {"requests": requests.map((request) => request.toMap()).toList()},
+    );
     final status = result["status"];
 
     switch (status) {
@@ -35,9 +39,8 @@ class AppleSignIn {
 
       case "error":
         return AuthorizationResult(
-          status: AuthorizationStatus.error,
-          error: NsError.fromMap(result["error"])
-        );
+            status: AuthorizationStatus.error,
+            error: NsError.fromMap(result["error"]));
         break;
     }
 
@@ -48,12 +51,15 @@ class AppleSignIn {
   static Future<CredentialState> getCredentialState(String userId) async {
     assert(userId != null, "Must provide userId");
 
-    final result = await _methodChannel.invokeMethod("getCredentialState", {"userId": userId});
+    final result = await _methodChannel
+        .invokeMethod("getCredentialState", {"userId": userId});
     final credentialState = result["credentialState"];
-    
+
     switch (credentialState) {
       case "error":
-        return CredentialState(status: CredentialStatus.error, error: NsError.fromMap(result["error"]));
+        return CredentialState(
+            status: CredentialStatus.error,
+            error: NsError.fromMap(result["error"]));
 
       case "revoked":
         return CredentialState(status: CredentialStatus.revoked);
@@ -82,9 +88,8 @@ class AppleSignIn {
         assert(credential != null);
 
         return AuthorizationResult(
-          status: AuthorizationStatus.authorized,
-          credential: AppleIdCredential.fromMap(credential)
-        );
+            status: AuthorizationStatus.authorized,
+            credential: AppleIdCredential.fromMap(credential));
 
         break;
 
@@ -118,7 +123,12 @@ class NsError {
   @override
   String toString() => localizedDescription;
 
-  const NsError({this.code, this.domain, this.localizedDescription, this.localizedRecoverySuggestion, this.localizedFailureReason});
+  const NsError(
+      {this.code,
+      this.domain,
+      this.localizedDescription,
+      this.localizedRecoverySuggestion,
+      this.localizedFailureReason});
 
   factory NsError.fromMap(Map map) {
     assert(map != null);
@@ -155,7 +165,8 @@ class AuthorizationResult {
 
   final NsError error;
 
-  const AuthorizationResult({@required this.status, this.credential, this.error});
+  const AuthorizationResult(
+      {@required this.status, this.credential, this.error});
 }
 
 enum AuthorizationStatus { authorized, error }
