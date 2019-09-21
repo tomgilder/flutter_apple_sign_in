@@ -32,16 +32,25 @@ typedef void(^CredentialStateCompletionBlock)(ASAuthorizationAppleIDProviderCred
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     if (@available(iOS 13.0, *)) {
-        if ([call.method isEqualToString:@"performRequests"]) {
+        if ([call.method isEqualToString:@"isAvailable"]) {
+            result(@{@"isAvailable": @(true)});
+            return;
+        }
+        else if ([call.method isEqualToString:@"performRequests"]) {
             [self performRequests:call result:result];
+            return;
         } else if ([call.method isEqualToString:@"getCredentialState"]) {
             [self getCredentialState:call result:result];
-        } else {
-            result(FlutterMethodNotImplemented);
+            return;
         }
     } else {
-        result(FlutterMethodNotImplemented);
+        if ([call.method isEqualToString:@"isAvailable"]) {
+            result(@{@"isAvailable": @(false)});
+            return;
+        }
     }
+
+    result(FlutterMethodNotImplemented);
 }
 
 - (void)performRequests:(FlutterMethodCall*)call result:(FlutterResult)result API_AVAILABLE(ios(13.0)) {

@@ -68,6 +68,13 @@ class AppleSignIn {
     throw "Unknown credentialState: '$credentialState'";
   }
 
+  static Future<bool> isAvailable() async {
+    final result = await _methodChannel.invokeMethod('isAvailable');
+    final isAvailable = result['isAvailable'] == 1;
+    assert(isAvailable != null);
+    return isAvailable;
+  }
+
   static AuthorizationResult _makeAuthorizationResult(Map params) {
     switch (params["credentialType"]) {
       case "ASAuthorizationAppleIDCredential":
