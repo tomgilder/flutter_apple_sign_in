@@ -20,7 +20,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   apple_sign_in: 7716c7ddfa195aeab7dec0dc374ef4ff45d1adb4
-  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_secure_storage: 0c5779648ff644110e507909b77a57e620cbbf8b
 
 PODFILE CHECKSUM: 53753e6df6f108de3dcb6d3894f42b39b585850f
