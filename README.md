@@ -1,8 +1,7 @@
+
 # Apple Sign In - Flutter Plugin
 
 Access [Sign In with Apple](https://developer.apple.com/sign-in-with-apple/) from Flutter.
-
-⚠️ This plugin is still in development and APIs will probably still change ⚠️
 
 ## Platform support
 
@@ -11,8 +10,6 @@ This plugin currently only supports iOS. There's a [JavaScript framework](https:
 ## To Do
 
 * Documentation
-* Support for iOS 12 and below, including an `isAvailable()` method to check if sign in is available
-* Flutter widget version of the "Sign in With Apple" button, to avoid the cost of creating a UIKit view
 
 ## Implementing
 
