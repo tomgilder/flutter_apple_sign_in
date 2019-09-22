@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 
 /// The kinds of contact information that can be requested from the user.
 @immutable

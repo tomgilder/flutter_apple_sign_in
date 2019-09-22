@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/services.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 import 'apple_id_credential.dart';
 import 'apple_id_request.dart';
 export 'authorization_scope.dart';

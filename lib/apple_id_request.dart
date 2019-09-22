@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 import 'authorization_scope.dart';
 import 'open_id_operation.dart';
 

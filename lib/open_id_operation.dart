@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 
 /// The kinds of operations that you can perform with OpenID authentication.
 @immutable
