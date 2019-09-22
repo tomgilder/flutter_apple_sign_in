@@ -4,10 +4,10 @@ import 'package:flutter/foundation.dart';
 @immutable
 class Scope {
   /// A scope that includes the user’s email address.
-  static const Scope email = Scope.rawValue("email");
+  static const Scope email = Scope.rawValue('email');
 
   /// A scope that includes the user’s full name.
-  static const Scope fullName = Scope.rawValue("full_name");
+  static const Scope fullName = Scope.rawValue('full_name');
 
   /// Value of the authorization scope
   final String value;

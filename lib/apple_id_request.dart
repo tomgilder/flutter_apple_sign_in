@@ -10,7 +10,10 @@ abstract class AuthorizationRequest {
 
   Map<String, dynamic> toMap();
 
-  const AuthorizationRequest({this.requestedOperation, this.requestedScopes});
+  const AuthorizationRequest({
+    this.requestedOperation,
+    this.requestedScopes,
+  });
 }
 
 @immutable
@@ -22,21 +25,21 @@ class AppleIdRequest extends AuthorizationRequest {
   /// The value is an arbitrary string that’s portable among apps from a single developer, but not between apps from different developers.
   final String user;
 
-  // TODO should default OpenIdOperation be login?
-  const AppleIdRequest(
-      {this.user,
-      OpenIdOperation requestedOperation = OpenIdOperation.operationLogin,
-      List<Scope> requestedScopes})
-      : super(
-            requestedOperation: requestedOperation,
-            requestedScopes: requestedScopes);
+  const AppleIdRequest({
+    this.user,
+    OpenIdOperation requestedOperation = OpenIdOperation.operationLogin,
+    List<Scope> requestedScopes,
+  }) : super(
+          requestedOperation: requestedOperation,
+          requestedScopes: requestedScopes,
+        );
 
   Map<String, dynamic> toMap() {
     return {
-      "requestType": "AppleIdRequest",
-      "user": user,
-      "requestedOperation": requestedOperation.value,
-      "requestedScopes":
+      'requestType': 'AppleIdRequest',
+      'user': user,
+      'requestedOperation': requestedOperation.value,
+      'requestedScopes':
           requestedScopes?.map((scope) => scope.value)?.toList() ?? []
     };
   }

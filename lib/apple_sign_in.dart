@@ -28,20 +28,20 @@ class AppleSignIn {
   static Future<AuthorizationResult> performRequests(
       List<AuthorizationRequest> requests) async {
     final result = await _methodChannel.invokeMethod(
-      "performRequests",
-      {"requests": requests.map((request) => request.toMap()).toList()},
+      'performRequests',
+      {'requests': requests.map((request) => request.toMap()).toList()},
     );
-    final status = result["status"];
+    final status = result['status'];
 
     switch (status) {
-      case "authorized":
+      case 'authorized':
         return _makeAuthorizationResult(result);
         break;
 
-      case "error":
+      case 'error':
         return AuthorizationResult(
             status: AuthorizationStatus.error,
-            error: NsError.fromMap(result["error"]));
+            error: NsError.fromMap(result['error']));
         break;
     }
 
@@ -50,25 +50,25 @@ class AppleSignIn {
 
   /// Returns the credential state for the given user.
   static Future<CredentialState> getCredentialState(String userId) async {
-    assert(userId != null, "Must provide userId");
+    assert(userId != null, 'Must provide userId');
 
     final result = await _methodChannel
-        .invokeMethod("getCredentialState", {"userId": userId});
-    final credentialState = result["credentialState"];
+        .invokeMethod('getCredentialState', {'userId': userId});
+    final credentialState = result['credentialState'];
 
     switch (credentialState) {
-      case "error":
+      case 'error':
         return CredentialState(
             status: CredentialStatus.error,
-            error: NsError.fromMap(result["error"]));
+            error: NsError.fromMap(result['error']));
 
-      case "revoked":
+      case 'revoked':
         return CredentialState(status: CredentialStatus.revoked);
 
-      case "authorized":
+      case 'authorized':
         return CredentialState(status: CredentialStatus.authorized);
 
-      case "notFound":
+      case 'notFound':
         return CredentialState(status: CredentialStatus.notFound);
     }
 
@@ -87,9 +87,9 @@ class AppleSignIn {
   }
 
   static AuthorizationResult _makeAuthorizationResult(Map params) {
-    switch (params["credentialType"]) {
-      case "ASAuthorizationAppleIDCredential":
-        final Map credential = params["credential"];
+    switch (params['credentialType']) {
+      case 'ASAuthorizationAppleIDCredential':
+        final Map credential = params['credential'];
         assert(credential != null);
 
         return AuthorizationResult(
@@ -99,7 +99,7 @@ class AppleSignIn {
         break;
 
       default:
-        throw "Unknown credentials type";
+        throw 'Unknown credentials type';
     }
   }
 }
@@ -139,11 +139,11 @@ class NsError {
     assert(map != null);
 
     return NsError(
-      code: map["code"],
-      domain: map["domain"],
-      localizedDescription: map["localizedDescription"],
-      localizedRecoverySuggestion: map["localizedRecoverySuggestion"],
-      localizedFailureReason: map["localizedFailureReason"],
+      code: map['code'],
+      domain: map['domain'],
+      localizedDescription: map['localizedDescription'],
+      localizedRecoverySuggestion: map['localizedRecoverySuggestion'],
+      localizedFailureReason: map['localizedFailureReason'],
     );
   }
 }
@@ -170,8 +170,11 @@ class AuthorizationResult {
 
   final NsError error;
 
-  const AuthorizationResult(
-      {@required this.status, this.credential, this.error});
+  const AuthorizationResult({
+    @required this.status,
+    this.credential,
+    this.error,
+  });
 }
 
 enum AuthorizationStatus { authorized, error }

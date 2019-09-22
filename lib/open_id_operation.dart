@@ -4,16 +4,16 @@ import 'package:flutter/foundation.dart';
 @immutable
 class OpenIdOperation {
   /// An operation that depends on the particular kind of credential provider.
-  static const operationImplicit = OpenIdOperation.rawValue("implicit");
+  static const operationImplicit = OpenIdOperation.rawValue('implicit');
 
   /// An operation used to authenticate a user.
-  static const operationLogin = OpenIdOperation.rawValue("login");
+  static const operationLogin = OpenIdOperation.rawValue('login');
 
   /// An operation that ends an authenticated session.
-  static const operationLogout = OpenIdOperation.rawValue("logout");
+  static const operationLogout = OpenIdOperation.rawValue('logout');
 
   /// An operation that refreshes the logged-in user’s credentials.
-  static const operationRefresh = OpenIdOperation.rawValue("refresh");
+  static const operationRefresh = OpenIdOperation.rawValue('refresh');
 
   /// The value of the operation
   final String value;

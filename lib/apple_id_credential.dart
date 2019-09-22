@@ -28,28 +28,32 @@ class AppleIdCredential {
   /// A value that indicates whether the user appears to be a real person.
   final UserDetectionStatus realUserStatus;
 
-  const AppleIdCredential(
-      {this.identityToken,
-      this.authorizationCode,
-      this.state,
-      this.user,
-      this.authorizedScopes,
-      this.fullName,
-      this.email,
-      this.realUserStatus});
+  const AppleIdCredential({
+    this.identityToken,
+    this.authorizationCode,
+    this.state,
+    this.user,
+    this.authorizedScopes,
+    this.fullName,
+    this.email,
+    this.realUserStatus,
+  });
 
   factory AppleIdCredential.fromMap(Map map) {
+    assert(map != null);
+
     return AppleIdCredential(
-        identityToken: map["identityToken"],
-        authorizationCode: map["authorizationCode"],
-        state: map["state"],
-        user: map["user"],
-        authorizedScopes: _scopesFromList(map["authorizedScopes"]),
-        email: map["email"],
-        realUserStatus: map.containsKey("realUserStatus")
-            ? UserDetectionStatus.values[map["realUserStatus"]]
-            : UserDetectionStatus.unsupported,
-        fullName: PersonNameComponents.fromMap(map["fullName"]));
+      identityToken: map['identityToken'],
+      authorizationCode: map['authorizationCode'],
+      state: map['state'],
+      user: map['user'],
+      authorizedScopes: _scopesFromList(map['authorizedScopes']),
+      email: map['email'],
+      realUserStatus: map.containsKey('realUserStatus')
+          ? UserDetectionStatus.values[map['realUserStatus']]
+          : UserDetectionStatus.unsupported,
+      fullName: PersonNameComponents.fromMap(map['fullName']),
+    );
   }
 
   static List<Scope> _scopesFromList(List list) {
@@ -91,16 +95,17 @@ class PersonNameComponents {
   /// Post-nominal letters denoting degree, accreditation, or other honor, e.g. Esq., Jr., Ph.D. Can be null.
   final String nameSuffix;
 
-  /// Name substituted for the purposes of familiarity, e.g. "Johnny". Can be null.
+  /// Name substituted for the purposes of familiarity, e.g. 'Johnny'. Can be null.
   final String nickname;
 
-  PersonNameComponents(
-      {this.namePrefix,
-      this.givenName,
-      this.middleName,
-      this.familyName,
-      this.nameSuffix,
-      this.nickname});
+  PersonNameComponents({
+    this.namePrefix,
+    this.givenName,
+    this.middleName,
+    this.familyName,
+    this.nameSuffix,
+    this.nickname,
+  });
 
   factory PersonNameComponents.fromMap(Map map) {
     if (map == null) {
@@ -108,11 +113,12 @@ class PersonNameComponents {
     }
 
     return PersonNameComponents(
-        namePrefix: map["namePrefix"],
-        givenName: map["givenName"],
-        middleName: map["middleName"],
-        familyName: map["familyName"],
-        nameSuffix: map["nameSuffix"],
-        nickname: map["nickname"]);
+      namePrefix: map['namePrefix'],
+      givenName: map['givenName'],
+      middleName: map['middleName'],
+      familyName: map['familyName'],
+      nameSuffix: map['nameSuffix'],
+      nickname: map['nickname'],
+    );
   }
 }

@@ -21,12 +21,12 @@ class AppleSignInButton extends StatefulWidget {
   /// A custom corner radius to be used by this button.
   final double cornerRadius;
 
-  const AppleSignInButton(
-      {this.onPressed,
-      this.type = ButtonType.defaultButton,
-      this.style = ButtonStyle.white,
-      this.cornerRadius = 6})
-      : assert(type != null),
+  const AppleSignInButton({
+    this.onPressed,
+    this.type = ButtonType.defaultButton,
+    this.style = ButtonStyle.white,
+    this.cornerRadius = 6,
+  })  : assert(type != null),
         assert(style != null),
         assert(cornerRadius != null);
 
@@ -55,14 +55,19 @@ class _AppleSignInButtonState extends State<AppleSignInButton> {
       onTapCancel: () => setState(() => _isTapDown = false),
       child: AnimatedContainer(
         duration: Duration(milliseconds: 100),
-        constraints:
-            BoxConstraints(minHeight: 32, maxHeight: 64, minWidth: 200),
+        constraints: BoxConstraints(
+          minHeight: 32,
+          maxHeight: 64,
+          minWidth: 200,
+        ),
         height: 50,
         decoration: BoxDecoration(
-            color: _isTapDown ? Colors.grey : bgColor,
-            borderRadius:
-                BorderRadius.all(Radius.circular(widget.cornerRadius)),
-            border: Border.all(width: .7, color: borderColor)),
+          color: _isTapDown ? Colors.grey : bgColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(widget.cornerRadius),
+          ),
+          border: Border.all(width: .7, color: borderColor),
+        ),
         child: Center(
             child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -72,9 +77,11 @@ class _AppleSignInButtonState extends State<AppleSignInButton> {
               child: SizedBox(
                 height: 14,
                 child: AspectRatio(
-                    aspectRatio: 25 / 31,
-                    child: CustomPaint(
-                        painter: _AppleLogoPainter(color: textColor))),
+                  aspectRatio: 25 / 31,
+                  child: CustomPaint(
+                    painter: _AppleLogoPainter(color: textColor),
+                  ),
+                ),
               ),
             ),
             Text(
@@ -88,7 +95,7 @@ class _AppleSignInButtonState extends State<AppleSignInButton> {
                 wordSpacing: -.5,
                 color: textColor,
               ),
-            )
+            ),
           ],
         )),
       ),
