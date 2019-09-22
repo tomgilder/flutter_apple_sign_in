@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 import 'apple_id_credential.dart';
@@ -75,6 +76,10 @@ class AppleSignIn {
   }
 
   static Future<bool> isAvailable() async {
+    if (!Platform.isIOS) {
+      return false;
+    }
+
     final result = await _methodChannel.invokeMethod('isAvailable');
     final isAvailable = result['isAvailable'] == 1;
     assert(isAvailable != null);
