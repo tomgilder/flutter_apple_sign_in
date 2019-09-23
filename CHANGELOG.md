@@ -1,6 +1,7 @@
 ## 0.0.3
 
-* Added `AuthorizationStatus.cancelled` return value
+* Added `AuthorizationStatus.cancelled` value
+* Added `CredentialStatus.transferred` value
 
 ## 0.0.2
 

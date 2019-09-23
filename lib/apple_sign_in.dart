@@ -80,6 +80,9 @@ class AppleSignIn {
 
       case 'notFound':
         return CredentialState(status: CredentialStatus.notFound);
+
+      case 'transferred':
+        return CredentialState(status: CredentialStatus.transferred);
     }
 
     throw "Unknown credentialState: '$credentialState'";
@@ -168,6 +171,8 @@ enum CredentialStatus {
 
   /// The user can’t be found.
   notFound,
+
+  transferred,
 
   error
 }

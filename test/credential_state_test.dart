@@ -70,5 +70,11 @@ void main() {
       final result = await AppleSignIn.getCredentialState(USER_ID);
       expect(result.status, CredentialStatus.notFound);
     });
+
+    test('getCredentialState returns transferred', () async {
+      _setUpReturn({'credentialState': 'transferred'});
+      final result = await AppleSignIn.getCredentialState(USER_ID);
+      expect(result.status, CredentialStatus.transferred);
+    });
   });
 }

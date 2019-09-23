@@ -132,6 +132,10 @@ class _SignInPageState extends State<SignInPage> {
       case CredentialStatus.notFound:
         print("getCredentialState returned not found");
         break;
+
+      case CredentialStatus.transferred:
+        print("getCredentialState returned not transferred");
+        break;
     }
   }
 }

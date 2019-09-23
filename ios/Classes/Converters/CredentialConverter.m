@@ -47,6 +47,9 @@
         case ASAuthorizationAppleIDProviderCredentialRevoked:
             return @"revoked";
             
+        case ASAuthorizationAppleIDProviderCredentialTransferred:
+            return @"transferred";
+            
         default: // ASAuthorizationAppleIDProviderCredentialNotFound
             return @"notFound";
     }
