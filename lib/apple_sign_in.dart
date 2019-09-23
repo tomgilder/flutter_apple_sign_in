@@ -16,6 +16,8 @@ class AppleSignIn {
   static const EventChannel _eventChannel =
       const EventChannel('dev.gilder.tom/apple_sign_in_events');
 
+  static const _errorCodeCancelled = 1001;
+
   static Stream<void> _onCredentialsRevoked;
   static Stream<void> get onCredentialRevoked {
     if (_onCredentialsRevoked == null) {
@@ -39,6 +41,14 @@ class AppleSignIn {
         break;
 
       case 'error':
+        final error = NsError.fromMap(result['error']);
+
+        if (error.code == _errorCodeCancelled) {
+          return AuthorizationResult(
+            status: AuthorizationStatus.cancelled,
+          );
+        }
+
         return AuthorizationResult(
             status: AuthorizationStatus.error,
             error: NsError.fromMap(result['error']));
@@ -177,4 +187,4 @@ class AuthorizationResult {
   });
 }
 
-enum AuthorizationStatus { authorized, error }
+enum AuthorizationStatus { authorized, cancelled, error }

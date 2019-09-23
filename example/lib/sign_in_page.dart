@@ -51,20 +51,26 @@ class _SignInPageState extends State<SignInPage> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  AppleSignInButton(),
-                                  if (errorMessage != null)
-                                    Text(errorMessage),
+                                  AppleSignInButton(
+                                    onPressed: logIn,
+                                  ),
+                                  if (errorMessage != null) Text(errorMessage),
                                   SizedBox(
                                     height: 500,
                                   ),
                                   RaisedButton(
                                     child: Text("Button Test Page"),
                                     onPressed: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (_) => ButtonTestPage()));
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  ButtonTestPage()));
                                     },
                                   )
                                 ])
-                          : Text('Sign in With Apple not available. Must be run on iOS 13+');
+                          : Text(
+                              'Sign in With Apple not available. Must be run on iOS 13+');
                     },
                   )))),
     );
@@ -77,6 +83,7 @@ class _SignInPageState extends State<SignInPage> {
 
     switch (result.status) {
       case AuthorizationStatus.authorized:
+
         // Store user ID
         await FlutterSecureStorage()
             .write(key: "userId", value: result.credential.user);
@@ -92,6 +99,10 @@ class _SignInPageState extends State<SignInPage> {
         setState(() {
           errorMessage = "Sign in failed 😿";
         });
+        break;
+
+      case AuthorizationStatus.cancelled:
+        print('User cancelled');
         break;
     }
   }
