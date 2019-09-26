@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'authorization_scope.dart';
+import 'scope.dart';
 import 'open_id_operation.dart';
 
 @immutable

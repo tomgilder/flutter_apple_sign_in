@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'apple_id_credential.dart';
 import 'apple_id_request.dart';
-export 'authorization_scope.dart';
+export 'scope.dart';
 export 'apple_id_request.dart';
 export 'apple_id_credential.dart';
 export 'open_id_operation.dart';

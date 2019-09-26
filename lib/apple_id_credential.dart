@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'dart:typed_data';
-import 'authorization_scope.dart';
+import 'scope.dart';
 
 @immutable
 class AppleIdCredential {
