@@ -9,7 +9,9 @@ This plugin currently only supports iOS. There's a [JavaScript framework](https:
 
 ## To Do
 
-* Documentation
+* Localisation for "Sign in with Flutter" button
+* A proper step-by-step example
+* Support for [PasswordProvider](https://developer.apple.com/documentation/authenticationservices/asauthorizationpasswordprovider)
 
 ## Implementing
 
