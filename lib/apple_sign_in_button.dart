@@ -6,6 +6,7 @@ enum ButtonType { defaultButton, continueButton, signIn }
 /// A style for the authorization button.
 enum ButtonStyle { black, whiteOutline, white }
 
+/// A button for Sign in With Apple
 class AppleSignInButton extends StatefulWidget {
   /// The callback that is called when the button is tapped or otherwise activated.
   ///

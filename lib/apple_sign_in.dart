@@ -18,15 +18,25 @@ class AppleSignIn {
 
   static const _errorCodeCancelled = 1001;
 
-  static Stream<void> _onCredentialsRevoked;
+  static Stream<void> _onCredentialRevoked;
+
+  /// A stream that emits an event when Apple ID credentials have been revoked.
   static Stream<void> get onCredentialRevoked {
-    if (_onCredentialsRevoked == null) {
-      _onCredentialsRevoked = _eventChannel.receiveBroadcastStream();
+    if (_onCredentialRevoked == null) {
+      _onCredentialRevoked = _eventChannel.receiveBroadcastStream();
     }
 
-    return _onCredentialsRevoked;
+    return _onCredentialRevoked;
   }
 
+  /// Starts the authorization flow requests provided. 
+  /// Currently the only supported request type is [AppleIdRequest].
+  /// 
+  /// ```dart
+  /// final AuthorizationResult result = await AppleSignIn.performRequests([
+  ///    AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
+  /// ]);
+  /// ```
   static Future<AuthorizationResult> performRequests(
       List<AuthorizationRequest> requests) async {
     final result = await _methodChannel.invokeMethod(
@@ -58,7 +68,7 @@ class AppleSignIn {
     throw "performRequests: Unknown status returned: '$status'";
   }
 
-  /// Returns the credential state for the given user.
+  /// Returns the credential state for the given user. Returns a [CredentialState].
   static Future<CredentialState> getCredentialState(String userId) async {
     assert(userId != null, 'Must provide userId');
 
@@ -88,6 +98,7 @@ class AppleSignIn {
     throw "Unknown credentialState: '$credentialState'";
   }
 
+  /// Determine if Sign In with Apple is supported on the current device
   static Future<bool> isAvailable() async {
     if (!Platform.isIOS) {
       return false;
@@ -177,6 +188,7 @@ enum CredentialStatus {
   error
 }
 
+/// The result of an [AppleIdRequest] request.
 @immutable
 class AuthorizationResult {
   final AuthorizationStatus status;
