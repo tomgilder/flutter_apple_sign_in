@@ -1,3 +1,9 @@
+## 0.1.0
+
+* Add `CredentialStatus.transferred`
+* Added documentation
+* API should now be stable
+
 ## 0.0.3
 
 * Added `AuthorizationStatus.cancelled` value
