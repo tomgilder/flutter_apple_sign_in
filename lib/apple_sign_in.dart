@@ -29,9 +29,9 @@ class AppleSignIn {
     return _onCredentialRevoked;
   }
 
-  /// Starts the authorization flow requests provided. 
+  /// Starts the authorization flow requests provided.
   /// Currently the only supported request type is [AppleIdRequest].
-  /// 
+  ///
   /// ```dart
   /// final AuthorizationResult result = await AppleSignIn.performRequests([
   ///    AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
