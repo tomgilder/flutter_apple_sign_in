@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: [
-        const Locale('ja'),
+        const Locale('en', 'ja'),
       ],
       home: SignInPage(),
     );
