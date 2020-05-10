@@ -1,5 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'dart:typed_data';
+
+import 'package:flutter/foundation.dart';
+
 import 'scope.dart';
 
 @immutable
@@ -38,6 +40,19 @@ class AppleIdCredential {
     this.email,
     this.realUserStatus,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      //'identityToken': this.identityToken,
+      //'authorizationCode': this.authorizationCode,
+      'state': this.state,
+      'user': this.user,
+      'authorizedScopes': this.authorizedScopes,
+      'fullName': this.fullName != null ? this.fullName.toMap() : '',
+      'email': this.email,
+      'realUserStatus': this.realUserStatus,
+    };
+  }
 
   factory AppleIdCredential.fromMap(Map map) {
     assert(map != null);
@@ -106,6 +121,17 @@ class PersonNameComponents {
     this.nameSuffix,
     this.nickname,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'namePrefix': this.namePrefix,
+      'givenName': this.givenName,
+      'middleName': this.middleName,
+      'familyName': this.familyName,
+      'nameSuffix': this.nameSuffix,
+      'nickname': this.nickname,
+    };
+  }
 
   factory PersonNameComponents.fromMap(Map map) {
     if (map == null) {
