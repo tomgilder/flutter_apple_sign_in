@@ -22,15 +22,18 @@ class AppleSignInButton extends StatefulWidget {
   /// A custom corner radius to be used by this button.
   final double cornerRadius;
 
-  // A custom text to display on the button, NB! it can used for localized text
+  // An optional 'custom text' to display on the button, NB! it can used for localized text
   final String buttonText;
+  // An optional 'Key' to identify the button, NB! it can be used for integration tests
+  final Key buttonKey;
 
   const AppleSignInButton(
       {this.onPressed,
       this.type = ButtonType.defaultButton,
       this.style = ButtonStyle.white,
       this.cornerRadius = 6,
-      this.buttonText = ''})
+      this.buttonText = '',
+      this.buttonKey = const Key('apple_signin')})
       : assert(type != null),
         assert(style != null),
         assert(cornerRadius != null);
@@ -52,6 +55,7 @@ class _AppleSignInButtonState extends State<AppleSignInButton> {
         widget.style == ButtonStyle.white ? Colors.white : Colors.black;
 
     return GestureDetector(
+      key: widget.buttonKey,
       onTapDown: (_) => setState(() => _isTapDown = true),
       onTapUp: (_) {
         setState(() => _isTapDown = false);
