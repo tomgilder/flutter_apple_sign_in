@@ -10,8 +10,7 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 public class AppleSignInPlugin implements MethodCallHandler {
   /** Plugin registration. */
   public static void registerWith(Registrar registrar) {
-    final MethodChannel channel = new MethodChannel(registrar.messenger(), "apple_sign_in");
-    channel.setMethodCallHandler(new AppleSignInPlugin());
+  
   }
 
   @Override
