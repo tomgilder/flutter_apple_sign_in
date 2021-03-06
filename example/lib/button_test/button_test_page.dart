@@ -1,7 +1,8 @@
-import 'package:apple_sign_in/apple_sign_in.dart';
+import 'package:apple_sign_in/apple_sign_in.dart' as AppleSignIn;
 import 'package:before_after/before_after.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'native_button.dart';
 
 class ButtonTestPage extends StatelessWidget {
@@ -21,28 +22,28 @@ class ButtonTestPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ButtonComparison(
-                  style: ButtonStyle.whiteOutline,
-                  type: ButtonType.signIn,
+                  style: AppleSignIn.ButtonStyle.whiteOutline,
+                  type: AppleSignIn.ButtonType.signIn,
                 ),
                 ButtonComparison(
-                  style: ButtonStyle.black,
-                  type: ButtonType.signIn,
+                  style: AppleSignIn.ButtonStyle.black,
+                  type: AppleSignIn.ButtonType.signIn,
                 ),
                 ButtonComparison(
-                  style: ButtonStyle.white,
-                  type: ButtonType.signIn,
+                  style: AppleSignIn.ButtonStyle.white,
+                  type: AppleSignIn.ButtonType.signIn,
                 ),
                 ButtonComparison(
-                  style: ButtonStyle.whiteOutline,
-                  type: ButtonType.continueButton,
+                  style: AppleSignIn.ButtonStyle.whiteOutline,
+                  type: AppleSignIn.ButtonType.continueButton,
                 ),
                 ButtonComparison(
-                  style: ButtonStyle.black,
-                  type: ButtonType.continueButton,
+                  style: AppleSignIn.ButtonStyle.black,
+                  type: AppleSignIn.ButtonType.continueButton,
                 ),
                 ButtonComparison(
-                  style: ButtonStyle.white,
-                  type: ButtonType.continueButton,
+                  style: AppleSignIn.ButtonStyle.white,
+                  type: AppleSignIn.ButtonType.continueButton,
                 ),
               ],
             ),
@@ -54,8 +55,8 @@ class ButtonTestPage extends StatelessWidget {
 }
 
 class ButtonComparison extends StatelessWidget {
-  final ButtonStyle style;
-  final ButtonType type;
+  final AppleSignIn.ButtonStyle style;
+  final AppleSignIn.ButtonType type;
 
   ButtonComparison({@required this.style, @required this.type});
 
@@ -93,7 +94,7 @@ class ButtonComparison extends StatelessWidget {
                 style: style,
                 type: type,
               ),
-              afterImage: AppleSignInButton(
+              afterImage: AppleSignIn.AppleSignInButton(
                 style: style,
                 type: type,
               ),

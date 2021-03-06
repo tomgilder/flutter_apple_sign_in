@@ -1,8 +1,8 @@
+import 'package:apple_sign_in/apple_sign_in.dart' as AppleSignIn;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:apple_sign_in/apple_sign_in.dart';
 
 /// A control you add to your interface that enables users to initiate the Sign In with Apple flow.
 class NativeAppleSignInButton extends StatelessWidget {
@@ -12,18 +12,18 @@ class NativeAppleSignInButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   /// A type for the authorization button.
-  final ButtonType type;
+  final AppleSignIn.ButtonType type;
 
   /// A style for the authorization button.
-  final ButtonStyle style;
+  final AppleSignIn.ButtonStyle style;
 
   /// A custom corner radius to be used by this button.
   final double cornerRadius;
 
   const NativeAppleSignInButton(
       {this.onPressed,
-      this.type = ButtonType.defaultButton,
-      this.style = ButtonStyle.white,
+      this.type = AppleSignIn.ButtonType.defaultButton,
+      this.style = AppleSignIn.ButtonStyle.white,
       this.cornerRadius = 4});
 
   @override
