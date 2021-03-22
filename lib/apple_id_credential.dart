@@ -1,32 +1,35 @@
-import 'package:flutter/foundation.dart';
 import 'dart:typed_data';
+
+import 'package:flutter/foundation.dart';
+
+import 'apple_sign_in.dart';
 import 'scope.dart';
 
 @immutable
 class AppleIdCredential {
   /// A JSON Web Token (JWT) that securely communicates information about the user to your app. Can be null.
-  final Uint8List identityToken;
+  final Uint8List? identityToken;
 
   /// A short-lived token used by your app for proof of authorization when interacting with the app’s server counterpart. Can be null.
-  final Uint8List authorizationCode;
+  final Uint8List? authorizationCode;
 
   /// An arbitrary string that your app provided to the request that generated the credential.
-  final String state;
+  final String? state;
 
   /// An identifier associated with the authenticated user. Can be null.
-  final String user;
+  final String? user;
 
   /// The contact information the user authorized your app to access.
-  final List<Scope> authorizedScopes;
+  final List<Scope>? authorizedScopes;
 
   /// The user’s name. Can be null.
-  final PersonNameComponents fullName;
+  final PersonNameComponents? fullName;
 
   /// The user’s email address. Can be null.
-  final String email;
+  final String? email;
 
   /// A value that indicates whether the user appears to be a real person.
-  final UserDetectionStatus realUserStatus;
+  final UserDetectionStatus? realUserStatus;
 
   const AppleIdCredential({
     this.identityToken,
@@ -40,8 +43,6 @@ class AppleIdCredential {
   });
 
   factory AppleIdCredential.fromMap(Map map) {
-    assert(map != null);
-
     return AppleIdCredential(
       identityToken: map['identityToken'],
       authorizationCode: map['authorizationCode'],
@@ -56,9 +57,9 @@ class AppleIdCredential {
     );
   }
 
-  static List<Scope> _scopesFromList(List list) {
+  static List<Scope> _scopesFromList(List? list) {
     if (list == null) {
-      return List();
+      return List.filled(0, Scope.email);
     }
 
     return list.map((scope) => Scope.rawValue(scope)).toList();
@@ -81,22 +82,22 @@ enum UserDetectionStatus {
 @immutable
 class PersonNameComponents {
   /// Pre-nominal letters denoting title, salutation, or honorific, e.g. Dr., Mr. Can be null.
-  final String namePrefix;
+  final String? namePrefix;
 
   /// Name bestowed upon an individual by one's parents, e.g. Johnathan. Can be null.
-  final String givenName;
+  final String? givenName;
 
   /// Secondary given name chosen to differentiate those with the same first name, e.g. Maple. Can be null.
-  final String middleName;
+  final String? middleName;
 
   /// Name passed from one generation to another to indicate lineage, e.g. Appleseed. Can be null.
-  final String familyName;
+  final String? familyName;
 
   /// Post-nominal letters denoting degree, accreditation, or other honor, e.g. Esq., Jr., Ph.D. Can be null.
-  final String nameSuffix;
+  final String? nameSuffix;
 
   /// Name substituted for the purposes of familiarity, e.g. 'Johnny'. Can be null.
-  final String nickname;
+  final String? nickname;
 
   PersonNameComponents({
     this.namePrefix,
@@ -107,7 +108,7 @@ class PersonNameComponents {
     this.nickname,
   });
 
-  factory PersonNameComponents.fromMap(Map map) {
+  factory PersonNameComponents.fromMap(Map? map) {
     if (map == null) {
       return PersonNameComponents();
     }
