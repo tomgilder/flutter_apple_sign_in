@@ -4,5 +4,5 @@ Sorry, I haven't had the time to maintain this plugin, and I haven't had a proje
 
 A fork of this project is being continued as `the_apple_sign_in` here:
 
-https://pub.dev/packages/the_apple_sign_in
-https://github.com/beerstorm-net/the_apple_sign_in
+* https://pub.dev/packages/the_apple_sign_in
+* https://github.com/beerstorm-net/the_apple_sign_in
