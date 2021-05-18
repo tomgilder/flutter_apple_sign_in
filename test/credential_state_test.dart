@@ -18,7 +18,7 @@ void main() {
     }
 
     test('getCredentialState sends userId to channel', () async {
-      MethodCall methodCall;
+      late MethodCall methodCall;
       channel.setMockMethodCallHandler((mc) async {
         if (mc.method == 'getCredentialState') {
           methodCall = mc;
@@ -46,11 +46,11 @@ void main() {
 
       final result = await AppleSignIn.getCredentialState(USER_ID);
       expect(result.status, CredentialStatus.error);
-      expect(result.error.code, 42);
-      expect(result.error.localizedDescription, 'localizedDescription');
-      expect(result.error.localizedRecoverySuggestion,
+      expect(result.error!.code, 42);
+      expect(result.error!.localizedDescription, 'localizedDescription');
+      expect(result.error!.localizedRecoverySuggestion,
           'localizedRecoverySuggestion');
-      expect(result.error.localizedFailureReason, 'localizedFailureReason');
+      expect(result.error!.localizedFailureReason, 'localizedFailureReason');
     });
 
     test('getCredentialState returns authorized', () async {

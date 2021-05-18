@@ -26,20 +26,20 @@ void main() {
 
       final result = AppleIdCredential.fromMap(map);
 
-      expect(result.identityToken.toList(), [4, 8, 15, 16, 23, 42]);
-      expect(result.authorizationCode.toList(), [1, 2, 3]);
+      expect(result.identityToken!.toList(), [4, 8, 15, 16, 23, 42]);
+      expect(result.authorizationCode!.toList(), [1, 2, 3]);
       expect(result.state, 'state');
       expect(result.authorizedScopes, [Scope.email, Scope.fullName]);
       expect(result.user, 'user');
       expect(result.email, 'email');
       expect(result.realUserStatus, UserDetectionStatus.likelyReal);
 
-      expect(result.fullName.familyName, 'family');
-      expect(result.fullName.givenName, 'given');
-      expect(result.fullName.middleName, 'middle');
-      expect(result.fullName.namePrefix, 'prefix');
-      expect(result.fullName.nameSuffix, 'suffix');
-      expect(result.fullName.nickname, 'nick');
+      expect(result.fullName!.familyName, 'family');
+      expect(result.fullName!.givenName, 'given');
+      expect(result.fullName!.middleName, 'middle');
+      expect(result.fullName!.namePrefix, 'prefix');
+      expect(result.fullName!.nameSuffix, 'suffix');
+      expect(result.fullName!.nickname, 'nick');
     });
   });
 }
