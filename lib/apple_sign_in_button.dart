@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import 'apple_sign_in_localizations.dart';
 
 /// A type for the authorization button.
 enum ButtonType { defaultButton, continueButton, signIn }
@@ -47,6 +50,11 @@ class _AppleSignInButtonState extends State<AppleSignInButton> {
     final borderColor =
         widget.style == ButtonStyle.white ? Colors.white : Colors.black;
 
+    final localization = AppleSignInLocalizations.of(context);
+    assert(localization != null);
+
+    final buttonText = widget.type == ButtonType.continueButton ? localization.continueButton : localization.defaultButton;
+
     return GestureDetector(
       onTapDown: (_) => setState(() => _isTapDown = true),
       onTapUp: (_) {
@@ -86,9 +94,7 @@ class _AppleSignInButtonState extends State<AppleSignInButton> {
               ),
             ),
             Text(
-              widget.type == ButtonType.continueButton
-                  ? 'Continue with Apple'
-                  : 'Sign in with Apple',
+              buttonText,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
